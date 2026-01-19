@@ -1,2 +1,2 @@
 # 3keetstreet.github.io
-3KeetStreet Marketing Services - Automation, Administration, Project Management, and Consulting
+3KeetStreet LLC Marketing Services - Automation, Administration, Project Management, and Consulting
