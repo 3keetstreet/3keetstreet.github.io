@@ -1,0 +1,58 @@
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <nav class="nav">
+      <div class="logo"></div>
+      <ul class="nav-links"></ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="container">
+      <!-- text + CTA -->
+    </div>
+  </section>
+
+  <section class="services">
+    <div class="container">
+      <!-- service cards -->
+    </div>
+  </section>
+
+  <section class="work">
+    <div class="container">
+      <!-- sample projects -->
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <div class="container">
+      <!-- testimonials -->
+    </div>
+  </section>
+
+  <section class="pricing">
+    <div class="container">
+      <!-- packages -->
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container">
+      <!-- final CTA -->
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <!-- footer content -->
+  </div>
+</footer>
+
+</body>
