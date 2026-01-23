@@ -23,6 +23,7 @@ section {
    HERO SECTION
    ========================= */
 .hero {
+  outline: 5px solid lime;
   min-height: 80vh;
   padding: 96px 0;
 
