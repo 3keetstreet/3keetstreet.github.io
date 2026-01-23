@@ -18,3 +18,18 @@ body {
 section {
   padding: 96px 0;
 }
+
+/* =========================
+   HERO SECTION
+   ========================= */
+.hero {
+  background-image: url("../assets/graphics/Herobackground1440x800.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  min-height: 800px;
+
+  display: flex;
+  align-items: center;
+}
