@@ -23,7 +23,7 @@ section {
    HERO SECTION
    ========================= */
 .hero {
-  min-height: 80vh;
+  min-height: 100vh;
   padding: 96px 0;
 }
   background-image: url("../assets/graphics/Herobackground1440x800.png");
