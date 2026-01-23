@@ -33,3 +33,21 @@ section {
   display: flex;
   align-items: center;
 }
+/* =========================
+   FEATURE ROW
+   ========================= */
+.features {
+  padding-top: 0; /* optional, tighter to hero */
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+  align-items: center;
+}
+
+.feature-grid img {
+  width: 100%;
+  height: auto;
+}
