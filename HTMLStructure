@@ -13,7 +13,7 @@
 
   <section class="hero">
     <div class="container">
-      <img scr="assets/graphics/Hero background 1440x800.png">
+      <img src="assets/graphics/Hero background 1440x800.png">
     </div>
   </section>
 
