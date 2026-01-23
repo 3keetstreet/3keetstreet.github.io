@@ -13,15 +13,7 @@
 
   <section class="hero">
     <div class="container">
-    </div>
-  </section>
-<section class="features">
-  <div class="container">
-    <div class="feature-grid">
-      <img src="assets/graphics/Serviceicon400x300.png" alt="">
-      <img src="assets/graphics/Serviceicon400x300.png" alt="">
-      <img src="assets/graphics/Serviceicon400x300.png" alt="">
-    </div>
+   <!--- features -->
   </div>
 </section>
 
