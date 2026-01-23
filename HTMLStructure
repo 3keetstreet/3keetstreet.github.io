@@ -13,7 +13,7 @@
 
   <section class="hero">
     <div class="container">
-      <!-- text + CTA -->
+      <img scr="assets/graphics/Hero background 1440x800.png">
     </div>
   </section>
 
