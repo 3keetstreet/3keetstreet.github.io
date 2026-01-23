@@ -36,6 +36,43 @@ section {
 }
 
 /* =========================
+   HEADER / NAV
+   ========================= */
+.site-header {
+  background: #e68383;
+  padding: 16px 0;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-weight: 500;
+  color: #000;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+}
+
+/* =========================
    FEATURE ROW
    ========================= */
 .features {
