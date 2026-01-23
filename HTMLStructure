@@ -15,7 +15,15 @@
     <div class="container">
     </div>
   </section>
-
+<section class="features">
+  <div class="container">
+    <div class="feature-grid">
+      <img src="assets/graphics/feature-1.png" alt="">
+      <img src="assets/graphics/feature-2.png" alt="">
+      <img src="assets/graphics/feature-3.png" alt="">
+    </div>
+  </div>
+</section>
   <section class="services">
     <div class="container">
       <!-- service cards -->
