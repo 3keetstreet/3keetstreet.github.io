@@ -25,25 +25,21 @@ section {
 .hero {
   min-height: 80vh;
   padding: 96px 0;
-}
+
   background-image: url("../assets/graphics/Herobackground1440x800.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 
-  min-height: 800px;
-
   display: flex;
   align-items: center;
 }
+
 /* =========================
    FEATURE ROW
    ========================= */
 .features {
   padding-top: 0; 
-}
-
-.features {
   margin-top: 96px;
 }
 
