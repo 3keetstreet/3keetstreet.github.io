@@ -75,6 +75,26 @@ section {
   }
 }
 
+/* Desktop */
+@media (min-width: 1024px) {
+  .logo img {
+    height: 64px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .logo img {
+    height: 56px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 500px) {
+  .logo img {
+    height: 44px;
+  }
+}
+
 .logo {
   display: flex;
   align-items: center;
@@ -82,9 +102,9 @@ section {
 }
 
 .logo img {
-  height: 40px;     
+  height: 56px;     
   width: auto;
-  max-width: 160px; 
+  max-width: 240px; 
   display: block;
 }
 
