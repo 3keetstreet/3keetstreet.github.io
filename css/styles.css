@@ -63,6 +63,18 @@ section {
   justify-content: space-between;
 }
 
+@media (min-width: 768px) {
+  .logo img {
+    height: 48px;
+  }
+}
+
+@media (max-width: 500px) {
+  .logo img {
+    height: 36px;
+  }
+}
+
 .logo {
   display: flex;
   align-items: center;
