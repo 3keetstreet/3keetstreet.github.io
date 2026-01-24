@@ -95,24 +95,44 @@ section {
    FEATURE ROW
    ========================= */
 
+.features {
+  margin-top: 96px;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 48px;                 
+  align-items: start;
+}
+
 .feature-item {
   display: flex;
   justify-content: center;
 }
 
+/* Tablet */
 @media (max-width: 900px) {
   .feature-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
   }
 }
 
+/* Mobile */
 @media (max-width: 500px) {
   .feature-grid {
     grid-template-columns: 1fr;
+    gap: 24px;              
   }
 
   .feature-item {
     max-width: 280px;
     margin: 0 auto;
   }
+}
+
+.feature-item img {
+  width: 100%;
+  height: auto;
 }
