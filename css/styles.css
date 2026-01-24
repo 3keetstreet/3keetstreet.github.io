@@ -24,7 +24,6 @@ section {
    ========================= */
 .hero {
   min-height: 80vh;
-  padding: 50px 0;
 
   background-image: url("../assets/graphics/Herobackground1440x800.png");
   background-size: cover;
