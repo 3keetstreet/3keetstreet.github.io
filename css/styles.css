@@ -79,6 +79,18 @@ section {
 /* =========================
    FEATURE ROW
    ========================= */
+@media (max-width: 900px) {
+  .feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .features {
   padding-top: 0; 
   margin-top: 96px;
