@@ -70,8 +70,9 @@ section {
 }
 
 .logo img {
-  height: 40px;      
+  height: 40px;     
   width: auto;
+  max-width: 160px; 
   display: block;
 }
 
