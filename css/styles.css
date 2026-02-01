@@ -125,12 +125,18 @@ Pale Yellow: #fffcd4 */
   margin-top: 50px;
 }
 
+.feature-text {
+  text-align: center;
+}
+
 .feature-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 32px;                 
   align-items: start;
+  align-items: center;
 }
+
 /* each card */
 .feature-item {
   display: flex;
