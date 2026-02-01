@@ -190,3 +190,64 @@ Pale Yellow: #fffcd4 */
     gap: 24px;
   }
 }
+/* =========================
+   SUB PAGE HERO (Split Layout)
+   ========================= */
+
+.subhero {
+  padding: 80px 0;
+}
+
+.subhero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+/* Image */
+.subhero-media img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px; 
+}
+
+/* Text */
+.subhero-content {
+  max-width: 520px;
+}
+
+.subhero-content h1 {
+  margin-bottom: 16px;
+}
+
+.subhero-content p {
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.subhero-list {
+  padding-left: 0;
+  list-style: none;
+  margin-bottom: 32px;
+}
+
+.subhero-list li {
+  margin-bottom: 12px;
+}
+
+/* =========================
+   MOBILE STACK
+   ========================= */
+@media (max-width: 768px) {
+  .subhero-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .subhero-content {
+    max-width: 100%;
+  }
+}
+
