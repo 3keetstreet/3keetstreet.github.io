@@ -32,8 +32,18 @@
       <div class="container subhero-grid">
 
         <div class="subhero-media">
-          <img src="assets/graphics/1200x1600placeholdersubpages.png" alt="Services">
-        </div>
+  <picture>
+    <!-- Mobile banner image -->
+    <source
+      media="(max-width: 768px)"
+      srcset="assets/graphics/services-hero-mobile.png">
+
+    <!-- Desktop/tall image -->
+    <img
+      src="assets/graphics/services-hero-desktop.png"
+      alt="Services">
+  </picture>
+</div>
 
         <div class="subhero-content">
           <h1>Services</h1>
