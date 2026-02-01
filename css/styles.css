@@ -110,7 +110,7 @@ Pale Yellow: #fffcd4 */
 .nav-links a {
   text-decoration: none;
   font-weight: 500;
-  color: #000;
+  color: #fffcd4;
 }
 
 .nav-links a:hover {
@@ -247,12 +247,13 @@ Pale Yellow: #fffcd4 */
    ========================= */
 @media (max-width: 768px) {
   .subhero {
-    padding: 0 0 40px 0; 
+    padding: 0 0 40px 0;
   }
 
   .subhero-grid {
     grid-template-columns: 1fr;
     gap: 24px;
+    justify-items: center; 
   }
 
   .subhero-media {
@@ -262,23 +263,23 @@ Pale Yellow: #fffcd4 */
 
   .subhero-media img {
     border-radius: 0;
-    height: auto; 
+    height: auto;
   }
-}
-@media (max-width: 768px) {
+
   .subhero-content {
+    max-width: 520px;
     text-align: center;
     margin: 0 auto;
   }
 
   .subhero-list {
-    text-align: left; 
+    text-align: left;
     max-width: 480px;
     margin: 0 auto 32px auto;
   }
 
-  .feature-link,
-  .btn {
+  .btn,
+  .feature-link {
     display: inline-block;
     margin-top: 12px;
   }
