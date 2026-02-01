@@ -42,6 +42,9 @@ Pale Yellow: #fffcd4 */
 /* =========================
    HEADER / NAV
    ========================= */
+html, body {
+  overflow-x: hidden;
+}
 
 @media (max-width: 768px) {
   .nav-container {
