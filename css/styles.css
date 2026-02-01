@@ -131,10 +131,42 @@ Pale Yellow: #fffcd4 */
   gap: 32px;                 
   align-items: start;
 }
-
+/* each card */
 .feature-item {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* icon */
+.feature-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* text */
+.feature-text h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.feature-text p {
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* learn more link */
+.feature-link {
+  display: inline-block;
+  margin-top: 6px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.feature-link:hover {
+  text-decoration: underline;
 }
 
 /* Tablet */
@@ -149,16 +181,6 @@ Pale Yellow: #fffcd4 */
 @media (max-width: 500px) {
   .feature-grid {
     grid-template-columns: 1fr;
-    gap: 24px;              
+    gap: 24px;
   }
-
-  .feature-item {
-    max-width: 320px;
-    margin: 0 auto 32px auto; 
-  }
-}
-
-.feature-item img {
-  width: 100%;
-  height: auto;
 }
