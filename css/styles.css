@@ -33,10 +33,10 @@ Pale Yellow: #fffcd4 */
    HERO SECTION
    ========================= */
 .hero {
-  height: clamp(420px, 60vh, 650px);
+  height: clamp(500px, 60vh, 650px);
   background-image: url("../assets/graphics/IMG_2505.png");
   background-size: cover;
-  background-position: center 90%;
+  background-position: center 100%;
   background-repeat: no-repeat;
 }
 
