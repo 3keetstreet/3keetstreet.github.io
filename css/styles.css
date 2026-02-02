@@ -36,6 +36,7 @@ Pale Yellow: #fffcd4 */
   min-height: 80vh;
 
   background-image: url("../assets/graphics/HeroMainBanner.png");
+  aspect-ratio: 16 / 9;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
