@@ -58,7 +58,7 @@ Pale Yellow: #fffcd4 */
 }
 
 @media (max-width: 900px) {
-  .hero { background-position: center 35%;
+  .hero { background-position: center 50%;
     height: 520px;                
     align-items: flex-start;       
     background-position: center top; 
