@@ -36,8 +36,9 @@ Pale Yellow: #fffcd4 */
   height: clamp(420px, 60vh, 650px);
   background-image: url("../assets/graphics/IMG_2505.png");
   background-size: cover;
-  background-position: center;
+  background-position: center 60%;
   background-repeat: no-repeat;
+}
 
 .hero-inner{
   width: 100%;
@@ -57,7 +58,7 @@ Pale Yellow: #fffcd4 */
 }
 
 @media (max-width: 900px) {
-  .hero {
+  .hero { background-position: center 35%;
     height: 520px;                
     align-items: flex-start;       
     background-position: center top; 
