@@ -42,18 +42,37 @@ Pale Yellow: #fffcd4 */
 .hero-inner{
   width: 100%;
   display: flex;
-  justify-content: flex-end; /* pushes copy to the right */
+  justify-content: flex-end; 
 }
 
 .hero-copy{
   max-width: 520px;
   text-align: left;
   padding: 24px;
-  margin-right: 24px; /* breathing room from edge */
+  margin-right: 24px; 
 }
   
   display: flex;
   align-items: center;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    height: 520px;                
+    align-items: flex-start;       
+    background-position: center top; 
+  }
+
+  .hero-inner{
+    justify-content: center;       
+  }
+
+  .hero-copy{
+    margin-right: 0;
+    margin-top: 110px;             
+    text-align: center;
+    max-width: 90%;
+  }
 }
 
 /* =========================
