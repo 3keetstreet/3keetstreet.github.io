@@ -39,6 +39,19 @@ Pale Yellow: #fffcd4 */
   background-position: center;
   background-repeat: no-repeat;
 
+.hero-inner{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end; /* pushes copy to the right */
+}
+
+.hero-copy{
+  max-width: 520px;
+  text-align: left;
+  padding: 24px;
+  margin-right: 24px; /* breathing room from edge */
+}
+  
   display: flex;
   align-items: center;
 }
