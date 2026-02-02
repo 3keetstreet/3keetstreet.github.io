@@ -67,7 +67,7 @@ Pale Yellow: #fffcd4 */
 /* Mobile */
 @media (max-width: 600px) {
   .hero {
-    background-position: center: 65% 35%;
+    background-position: 65% 35%;
   }
 }
 
