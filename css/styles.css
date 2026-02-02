@@ -57,12 +57,19 @@ Pale Yellow: #fffcd4 */
   align-items: center;
 }
 
+/* Tablet */
 @media (max-width: 900px) {
-  .hero { background-position: center 50%;
-    height: 520px;                
-    align-items: flex-start;       
-    background-position: center top; 
+  .hero {
+    background-position: center 50%;
   }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .hero {
+    background-position: center 35%;
+  }
+}
 
   .hero-inner{
     justify-content: center;       
