@@ -56,7 +56,8 @@ Pale Yellow: #fffcd4 */
   padding: 25px;
   margin-right: 2px;
   text-align: right;
-  color: #fffcd4
+  h1 { color: #fffcd4; }
+  p { color: #cbfcc5; }
 }
 
 /* Tablet */
