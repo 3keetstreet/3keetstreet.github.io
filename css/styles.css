@@ -61,7 +61,7 @@ Pale Yellow: #fffcd4 */
 /* Tablet */
 @media (max-width: 900px) {
   .hero {
-    background-position: 68% 100%;
+    background-position: 48% 100%;
     align-items: flex-start;
   }
 
