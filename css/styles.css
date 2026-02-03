@@ -51,16 +51,9 @@ Pale Yellow: #fffcd4 */
   justify-content: flex-end;
 }
 
-.hero-copy {
-  max-width: 520px;
-  padding: 24px;
-  margin-right: 24px;
-  text-align: right;
-}
-
 @media (max-width: 900px) {
   .hero {
-    background-position: 88% 85%;
+    background-position: 88% 100%;
     align-items: flex-start;
   }
 
@@ -78,7 +71,7 @@ Pale Yellow: #fffcd4 */
 
 @media (max-width: 600px) {
   .hero {
-    background-position: 70% 85%;
+    background-position: 85% 100%;
   }
 
   .hero .container {
