@@ -38,8 +38,6 @@ Pale Yellow: #fffcd4 */
   background-image: url("/assets/graphics/IMG_2505.png");
   background-size: cover;
   background-repeat: no-repeat;
-
-  /* Desktop: show birds + pan a bit right */
   background-position: 65% 100%;
 
   display: flex;
@@ -81,7 +79,7 @@ Pale Yellow: #fffcd4 */
 /* Mobile */
 @media (max-width: 600px) {
   .hero {
-    background-position: 92% 100%;
+    background-position: 88% 90%;
   }
 
   .hero-copy {
