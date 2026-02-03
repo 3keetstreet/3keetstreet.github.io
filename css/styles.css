@@ -34,7 +34,7 @@ Pale Yellow: #fffcd4 */
    ========================= */
 
 .hero {
-  height: clamp(560px, 90vh, 650px);
+  height: clamp(560px, 80vh, 650px);
   background-image: url("/assets/graphics/IMG_2505.png");
   background-size: cover;
   background-repeat: no-repeat;
