@@ -79,11 +79,11 @@ Pale Yellow: #fffcd4 */
 /* Mobile */
 @media (max-width: 600px) {
   .hero {
-    background-position: 10% 50%;
+    background-position: 10% 40%;
   }
 
   .hero-copy {
-    margin-top: 30px;
+    margin-top: 2px;
   }
 }
 
