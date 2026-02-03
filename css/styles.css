@@ -39,40 +39,53 @@ Pale Yellow: #fffcd4 */
   background-size: cover;
   background-repeat: no-repeat;
 
+  /* Desktop: show birds + pan a bit right */
   background-position: 65% 100%;
 
   display: flex;
   align-items: center;
 }
 
+.hero-inner {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.hero-copy {
+  max-width: 520px;
+  padding: 24px;
+  margin-right: 24px;
+  text-align: right;
+}
+
+/* Tablet */
 @media (max-width: 900px) {
   .hero {
     background-position: 88% 100%;
     align-items: flex-start;
   }
 
-  .hero .container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    text-align: right;
-    padding-top: 90px;
+  .hero-inner {
+    justify-content: center;
   }
 
-  .hero h1,
-  .hero p {
+  .hero-copy {
+    margin-top: 90px;
+    margin-right: 0;
     max-width: 90%;
+    text-align: center;
   }
 }
 
+/* Mobile */
 @media (max-width: 600px) {
   .hero {
-    background-position: 85% 100%;
+    background-position: 92% 100%;
   }
 
-  .hero .container {
-    padding-top: 100px;
+  .hero-copy {
+    margin-top: 100px;
   }
 }
 
