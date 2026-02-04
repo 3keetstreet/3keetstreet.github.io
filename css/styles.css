@@ -235,6 +235,7 @@ Pale Yellow: #fffcd4 */
 .feature-link:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+  background-color: #b8f5b1;
 }
 
 .feature-link:active {
