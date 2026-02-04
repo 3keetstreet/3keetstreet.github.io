@@ -228,8 +228,13 @@ Pale Yellow: #fffcd4 */
   font-weight: 600;
   font-size: 0.9rem;
 
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 7px rgba(0,0,0,0.15);
   transition: all 0.2s ease;
+}
+
+.feature-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.2);
 }
 
 /* Tablet */
