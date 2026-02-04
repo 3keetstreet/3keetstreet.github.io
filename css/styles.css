@@ -238,11 +238,6 @@ Pale Yellow: #fffcd4 */
   background-color: #b8f5b1;
 }
 
-.feature-link:active {
-  transform: translateY(0);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-}
-
 /* Tablet */
 @media (max-width: 900px) {
   .feature-grid {
