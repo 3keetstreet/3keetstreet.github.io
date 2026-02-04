@@ -237,6 +237,11 @@ Pale Yellow: #fffcd4 */
   box-shadow: 0 8px 18px rgba(0,0,0,0.2);
 }
 
+.feature-link:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
 /* Tablet */
 @media (max-width: 900px) {
   .feature-grid {
