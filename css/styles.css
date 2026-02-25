@@ -331,8 +331,7 @@ Pale Yellow: #fffcd4 */
 
 .service-row {
   display: flex;
-  align-items: center;
-  gap: 60px;
+  align-items: stretch;
   margin-bottom: 100px;
 }
 
@@ -359,6 +358,13 @@ Pale Yellow: #fffcd4 */
   align-items: center;
 }
 
+.service-media {
+  border-radius: 16px 0 0 16px;
+}
+
+.service-content {
+  border-radius: 0 16px 16px 0;
+}
 .service-media img {
   max-width: 100%;
   height: auto;
