@@ -443,3 +443,60 @@ Pale Yellow: #fffcd4 */
     max-height: none;
   }
 }
+/* MOBILE: services cards should be centered and consistent */
+@media (max-width: 900px) {
+  .services-overview .service-row,
+  .services-overview .service-row.reverse {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .services-overview .service-media,
+  .services-overview .service-content {
+    width: 100%;
+    max-width: 560px;
+  }
+
+  /* Always use the SAME overlap direction on mobile */
+  .services-overview .service-content,
+  .services-overview .service-row.reverse .service-content {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: -18px;              /* layered tuck */
+  }
+}
+@media (max-width: 768px) {
+  .subhero {
+    padding: 0 0 40px 0;
+  }
+
+  .subhero-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    justify-items: center;
+  }
+
+  /* Full-bleed image banner */
+  .subhero-media {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+  }
+
+  .subhero-media img {
+    width: 100%;
+    height: 60vh;          /* key: makes it feel like “fills screen” */
+    min-height: 420px;     /* prevents it getting tiny */
+    object-fit: cover;     /* key: fills the area */
+    border-radius: 0;
+    display: block;
+  }
+
+  /* Text under the banner */
+  .subhero-content {
+    max-width: 520px;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0 24px;       /* gives breathing room since image is full-bleed */
+  }
+}
