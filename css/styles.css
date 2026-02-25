@@ -496,4 +496,116 @@ Pale Yellow: #fffcd4 */
     display: inline-block;
     margin-top: 12px;
   }
+/* =========================
+   SERVICES OVERVIEW (FINAL OVERRIDE)
+========================= */
+
+.services-overview .service-row{
+  display:flex;
+  align-items:center;       /* prevents stretch */
+  justify-content:center;
+  gap:0;
+  margin: 0 0 110px 0;
+  flex-wrap: nowrap;        /* IMPORTANT: prevents weird stacking */
+}
+
+/* Make the bird card a fixed-ish visual size so it doesn't go mega */
+.services-overview .service-media{
+  flex: 0 0 520px;          /* width */
+  max-width: 520px;
+  background:#3b646b;
+  padding: 24px;
+ 
+  position:relative;
+  z-index:2;
+}
+
+/* Clamp the image so it can't explode */
+.services-overview .service-media img{
+  width:100%;
+  height:auto;
+  display:block;
+  max-height: 520px;        /* keeps it sane */
+  object-fit: contain;
+}
+
+/* The description card is intentionally smaller */
+.services-overview .service-content{
+  flex: 0 0 520px;
+  max-width: 520px;
+  background:#354545;
+  padding: 34px 36px;
+  border-radius:16px;
+  position:relative;
+  z-index:1;
+
+  margin-left:-56px;        /* overlap behind bird */
+}
+
+/* Reverse layout for alternating rows */
+.services-overview .service-row.reverse{
+  flex-direction: row-reverse;
+}
+
+.services-overview .service-row.reverse .service-content{
+  margin-left:0;
+  margin-right:-56px;
+}
+
+/* Lock the text colors in the content card */
+.services-overview .service-content h3{
+  color:#cbfcc5 !important;
+}
+
+.services-overview .service-content ul,
+.services-overview .service-content li{
+  color:#fffcd4 !important;
+}
+
+.services-overview .service-content li::marker{
+  color:#cbfcc5 !important;
+}
+
+/* Button keeps your mint scheme */
+.services-overview .btn-outline{
+  display:inline-block;
+  padding:10px 20px;
+  border:1px solid #cbfcc5;
+  color:#cbfcc5;
+  text-decoration:none;
+  transition: all .2s ease;
+}
+
+.services-overview .btn-outline:hover{
+  background:#cbfcc5;
+  color:#354545;
+  transform: translateY(-2px);
+}
+
+/* Mobile: stack cleanly, remove overlap */
+@media (max-width: 900px){
+  .services-overview .service-row,
+  .services-overview .service-row.reverse{
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  .services-overview .service-media,
+  .services-overview .service-content{
+    flex: 1 1 auto;
+    max-width: 560px;
+    width: 100%;
+  }
+
+  .services-overview .service-content{
+    margin-left:0;
+    margin-right:0;
+    margin-top:-18px;  /* keeps the layered vibe even stacked */
+  }
+
+  .services-overview .service-media img{
+    max-height: none;
+  }
+}
 }
