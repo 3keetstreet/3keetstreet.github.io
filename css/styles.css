@@ -343,7 +343,7 @@ Pale Yellow: #fffcd4 */
 .service-card {
   flex: 1;
   background: #354545;
-  padding: 50px;
+  padding: 30px;
   border-radius: 16px;
   transition: transform 0.3s ease;
 }
