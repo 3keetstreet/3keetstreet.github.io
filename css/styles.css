@@ -60,7 +60,6 @@ Pale Yellow: #fffcd4 */
 
   .hero-copy h1 { color: #fffcd4; }
   .hero-copy p { color: #cbfcc5; }
-}
 
 /* Tablet */
 @media (max-width: 900px) {
@@ -332,17 +331,20 @@ Pale Yellow: #fffcd4 */
 /* Service Row Layout */
 
 .service-row {
+ /* Service Row Layout */
+.service-row {
   display: flex;
-  align-items: stretch;
+  align-items: center;      /* NOT stretch */
   margin-bottom: 100px;
+  gap: 0;                   /* no gap */
 }
 
 .service-row.reverse {
   flex-direction: row-reverse;
 }
 
+/* Cards */
 .service-card {
-  flex: 1;
   background: #354545;
   padding: 30px;
   border-radius: 16px;
@@ -353,23 +355,37 @@ Pale Yellow: #fffcd4 */
   transform: translateY(-4px);
 }
 
+/* Left (bird) card */
 .service-media {
-  background: #354545;
+  flex: 1.15;               /* make it a bit bigger */
+  background: #3b646b;      /* or #354545 if you want exact */
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2;               /* sits on top */
+  position: relative;
 }
 
-.service-media {
-  border-radius: 16px 0 0 16px;
-}
-
-.service-content {
-  border-radius: 0 16px 16px 0;
-}
 .service-media img {
-  max-width: 100%;
+  width: 100%;
   height: auto;
+  display: block;
+}
+
+/* Right (content) card */
+.service-content {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  margin-left: -24px;       /* THIS creates the tucked-under look */
+  padding: 36px 36px 34px;  /* a bit more breathing room */
+  max-width: 560px;         /* prevents it from getting too huge */
+}
+
+/* When reversed, tuck the other direction */
+.service-row.reverse .service-content {
+  margin-left: 0;
+  margin-right: -24px;
 }
 
 /* Service Card Text Colors */
