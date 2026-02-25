@@ -56,8 +56,10 @@ Pale Yellow: #fffcd4 */
   padding: 25px;
   margin-right: 2px;
   text-align: right;
-  h1 { color: #fffcd4; }
-  p { color: #cbfcc5; }
+}
+
+  .hero-copy h1 { color: #fffcd4; }
+  .hero-copy p { color: #cbfcc5; }
 }
 
 /* Tablet */
@@ -223,7 +225,7 @@ Pale Yellow: #fffcd4 */
   border-radius: 999px;            /* pill shape */
 
   background-color: #cbfcc5;       /* minty accent */
-  color: #cbfcc5;                  /* dark teal text */
+  color: #354545;                  /* dark teal text */
   text-decoration: none;
   font-weight: 600;
   font-size: 0.9rem;
