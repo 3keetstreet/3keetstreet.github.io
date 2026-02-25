@@ -348,20 +348,6 @@ Pale Yellow: #fffcd4 */
   transition: transform 0.3s ease;
 }
 
-/* Service Card Text Colors */
-
-.services-overview .service-content h3 {
-  color: #cbfcc5; /* Mint */
-}
-
-.services-overview .service-content li {
-  color: #fffcd4; /* Pale Yellow */
-}
-
-.services-overview .service-content ul {
-  color: #fffcd4;
-}
-
 .service-card:hover {
   transform: translateY(-4px);
 }
@@ -376,6 +362,20 @@ Pale Yellow: #fffcd4 */
 .service-media img {
   max-width: 100%;
   height: auto;
+}
+
+/* Service Card Text Colors */
+
+.services-overview .service-content h3 {
+  color: #cbfcc5; /* Mint */
+}
+
+.services-overview .service-content li {
+  color: #fffcd4; /* Pale Yellow */
+}
+
+.services-overview .service-content ul {
+  color: #fffcd4;
 }
 
 .service-content h3 {
