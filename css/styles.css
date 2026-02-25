@@ -268,7 +268,15 @@ Pale Yellow: #fffcd4 */
   gap: 64px;
   align-items: center;
 }
+/* Section Intro Custom Colors */
 
+.services-overview .section-intro h2 {
+  color: #cbfcc5; /* Mint */
+}
+
+.services-overview .section-intro p {
+  color: #fffcd4; /* Pale yellow */
+}
 /* Image */
 .subhero-media picture,
 .subhero-media img {
