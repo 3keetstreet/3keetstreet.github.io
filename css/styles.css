@@ -304,6 +304,117 @@ Pale Yellow: #fffcd4 */
 .subhero-list li {
   margin-bottom: 12px;
 }
+/* =========================
+   SERVICES OVERVIEW
+========================= */
+
+.services-overview {
+  padding: 100px 0;
+}
+
+.section-intro {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 80px;
+}
+
+.section-intro h2 {
+  font-size: 2rem;
+  margin-bottom: 16px;
+}
+
+.section-intro p {
+  opacity: 0.85;
+}
+
+/* Service Row Layout */
+
+.service-row {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  margin-bottom: 100px;
+}
+
+.service-row.reverse {
+  flex-direction: row-reverse;
+}
+
+.service-card {
+  flex: 1;
+  background: #354545;
+  padding: 50px;
+  border-radius: 16px;
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+}
+
+.service-media {
+  background: #3b646b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.service-media img {
+  max-width: 100%;
+  height: auto;
+}
+
+.service-content h3 {
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.service-content ul {
+  margin-bottom: 30px;
+  padding-left: 20px;
+}
+
+.service-content li {
+  margin-bottom: 10px;
+}
+
+/* Outline Button */
+
+.btn-outline {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid #cbfcc5;
+  color: #cbfcc5;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-outline:hover {
+  background: #cbfcc5;
+  color: #354545;
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+  .service-row {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .service-row.reverse {
+    flex-direction: column;
+  }
+
+  .service-card {
+    padding: 30px;
+  }
+
+  .services-overview {
+    padding: 60px 0;
+  }
+}
 
 /* =========================
    MOBILE: STACK 
