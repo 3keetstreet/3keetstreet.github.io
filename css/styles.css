@@ -308,118 +308,105 @@ Pale Yellow: #fffcd4 */
 /* =========================
    SERVICES OVERVIEW
 ========================= */
+/* =========================
+   SERVICES OVERVIEW
+========================= */
 
 .services-overview {
   padding: 100px 0;
 }
 
-.section-intro {
+.services-overview .section-intro {
   text-align: center;
   max-width: 700px;
   margin: 0 auto 80px;
 }
 
-.section-intro h2 {
+.services-overview .section-intro h2 {
   font-size: 2rem;
   margin-bottom: 16px;
 }
 
-.section-intro p {
+.services-overview .section-intro p {
   opacity: 0.85;
 }
 
-/* Service Row Layout */
-
-.service-row {
- /* Service Row Layout */
-.service-row {
+/* --- ROW LAYOUT (desktop) --- */
+.services-overview .service-row {
   display: flex;
-  align-items: center;      /* NOT stretch */
-  margin-bottom: 100px;
-  gap: 0;                   /* no gap */
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin: 0 0 110px 0;
+  flex-wrap: nowrap;
 }
 
-.service-row.reverse {
+.services-overview .service-row.reverse {
   flex-direction: row-reverse;
 }
 
-/* Cards */
-.service-card {
-  background: #354545;
-  padding: 30px;
+/* --- BIRD CARD --- */
+.services-overview .service-media {
+  flex: 0 0 520px;
+  max-width: 520px;
+  background: #3b646b;
+  padding: 24px;
   border-radius: 16px;
-  transition: transform 0.3s ease;
-}
-
-.service-card:hover {
-  transform: translateY(-4px);
-}
-
-/* Left (bird) card */
-.service-media {
-  flex: 1.15;               /* make it a bit bigger */
-  background: #3b646b;      /* or #354545 if you want exact */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2;               /* sits on top */
   position: relative;
+  z-index: 2;
 }
 
-.service-media img {
+.services-overview .service-media img {
   width: 100%;
   height: auto;
   display: block;
+  max-height: 520px;
+  object-fit: contain;
 }
 
-/* Right (content) card */
-.service-content {
-  flex: 1;
+/* --- CONTENT CARD (smaller + tucked behind) --- */
+.services-overview .service-content {
+  flex: 0 0 520px;
+  max-width: 520px;
+  background: #354545;
+  padding: 34px 36px;
+  border-radius: 16px;
   position: relative;
   z-index: 1;
-  margin-left: -24px;       /* THIS creates the tucked-under look */
-  padding: 36px 36px 34px;  /* a bit more breathing room */
-  max-width: 560px;         /* prevents it from getting too huge */
+
+  margin-left: -56px; /* overlap behind bird */
 }
 
-/* When reversed, tuck the other direction */
-.service-row.reverse .service-content {
+.services-overview .service-row.reverse .service-content {
   margin-left: 0;
-  margin-right: -24px;
+  margin-right: -56px;
 }
 
-/* Service Card Text Colors */
-
+/* --- TEXT COLORS IN CONTENT CARD --- */
 .services-overview .service-content h3 {
-  color: #cbfcc5; /* Mint */
-}
-
-.services-overview .service-content li {
-  color: #fffcd4; /* Pale Yellow */
-}
-
-.services-overview .service-content ul {
-  color: #fffcd4;
-}
-
-.service-content h3 {
+  color: #cbfcc5 !important;
   margin-bottom: 20px;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-.service-content ul {
+.services-overview .service-content ul {
+  color: #fffcd4 !important;
   margin-bottom: 30px;
   padding-left: 20px;
 }
 
-.service-content li {
+.services-overview .service-content li {
+  color: #fffcd4 !important;
   margin-bottom: 10px;
 }
 
-/* Outline Button */
+.services-overview .service-content li::marker {
+  color: #cbfcc5 !important;
+}
 
-.btn-outline {
+/* --- BUTTON --- */
+.services-overview .btn-outline {
   display: inline-block;
   padding: 10px 20px;
   border: 1px solid #cbfcc5;
@@ -428,184 +415,34 @@ Pale Yellow: #fffcd4 */
   transition: all 0.2s ease;
 }
 
-.btn-outline:hover {
+.services-overview .btn-outline:hover {
   background: #cbfcc5;
   color: #354545;
-}
-
-/* Mobile */
-
-@media (max-width: 768px) {
-  .service-row {
-    flex-direction: column;
-    gap: 30px;
-  }
-
-  .service-row.reverse {
-    flex-direction: column;
-  }
-
-  .service-card {
-    padding: 30px;
-  }
-
-  .services-overview {
-    padding: 60px 0;
-  }
-}
-
-/* =========================
-   MOBILE: STACK 
-   ========================= */
-@media (max-width: 768px) {
-  .subhero {
-    padding: 0 0 40px 0;
-  }
-
-  .subhero-grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
-    justify-items: center; 
-  }
-
-  .subhero-media {
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    margin-right: calc(-50vw + 50%);
-  }
-
-  .subhero-media img {
-    border-radius: 0;
-    height: auto;
-  }
-
-  .subhero-content {
-    max-width: 520px;
-    text-align: center;
-    margin: 0 auto;
-  }
-
-  .subhero-list {
-    text-align: left;
-    max-width: 480px;
-    margin: 0 auto 32px auto;
-  }
-
-  .btn,
-  .feature-link {
-    display: inline-block;
-    margin-top: 12px;
-  }
-/* =========================
-   SERVICES OVERVIEW (FINAL OVERRIDE)
-========================= */
-
-.services-overview .service-row{
-  display:flex;
-  align-items:center;       /* prevents stretch */
-  justify-content:center;
-  gap:0;
-  margin: 0 0 110px 0;
-  flex-wrap: nowrap;        /* IMPORTANT: prevents weird stacking */
-}
-
-/* Make the bird card a fixed-ish visual size so it doesn't go mega */
-.services-overview .service-media{
-  flex: 0 0 520px;          /* width */
-  max-width: 520px;
-  background:#3b646b;
-  padding: 24px;
- 
-  position:relative;
-  z-index:2;
-}
-
-/* Clamp the image so it can't explode */
-.services-overview .service-media img{
-  width:100%;
-  height:auto;
-  display:block;
-  max-height: 520px;        /* keeps it sane */
-  object-fit: contain;
-}
-
-/* The description card is intentionally smaller */
-.services-overview .service-content{
-  flex: 0 0 520px;
-  max-width: 520px;
-  background:#354545;
-  padding: 34px 36px;
-  border-radius:16px;
-  position:relative;
-  z-index:1;
-
-  margin-left:-56px;        /* overlap behind bird */
-}
-
-/* Reverse layout for alternating rows */
-.services-overview .service-row.reverse{
-  flex-direction: row-reverse;
-}
-
-.services-overview .service-row.reverse .service-content{
-  margin-left:0;
-  margin-right:-56px;
-}
-
-/* Lock the text colors in the content card */
-.services-overview .service-content h3{
-  color:#cbfcc5 !important;
-}
-
-.services-overview .service-content ul,
-.services-overview .service-content li{
-  color:#fffcd4 !important;
-}
-
-.services-overview .service-content li::marker{
-  color:#cbfcc5 !important;
-}
-
-/* Button keeps your mint scheme */
-.services-overview .btn-outline{
-  display:inline-block;
-  padding:10px 20px;
-  border:1px solid #cbfcc5;
-  color:#cbfcc5;
-  text-decoration:none;
-  transition: all .2s ease;
-}
-
-.services-overview .btn-outline:hover{
-  background:#cbfcc5;
-  color:#354545;
   transform: translateY(-2px);
 }
 
-/* Mobile: stack cleanly, remove overlap */
-@media (max-width: 900px){
+/* --- MOBILE / TABLET STACK --- */
+@media (max-width: 900px) {
   .services-overview .service-row,
-  .services-overview .service-row.reverse{
+  .services-overview .service-row.reverse {
     flex-direction: column;
     align-items: center;
-    flex-wrap: nowrap;
   }
 
   .services-overview .service-media,
-  .services-overview .service-content{
+  .services-overview .service-content {
     flex: 1 1 auto;
     max-width: 560px;
     width: 100%;
   }
 
-  .services-overview .service-content{
-    margin-left:0;
-    margin-right:0;
-    margin-top:-18px;  /* keeps the layered vibe even stacked */
+  .services-overview .service-content {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: -18px; /* still feels layered */
   }
 
-  .services-overview .service-media img{
+  .services-overview .service-media img {
     max-height: none;
   }
 }
-
