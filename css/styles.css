@@ -318,15 +318,6 @@ Pale Yellow: #fffcd4 */
   margin: 0 auto 80px;
 }
 
-/* Section Intro Custom Colors */
-
-.services-overview .section-intro h2 {
-  color: #cbfcc5; /* Mint */
-}
-
-.services-overview .section-intro p {
-  color: #fffcd4; /* Pale yellow */
-}
 .section-intro h2 {
   font-size: 2rem;
   margin-bottom: 16px;
@@ -355,6 +346,20 @@ Pale Yellow: #fffcd4 */
   padding: 30px;
   border-radius: 16px;
   transition: transform 0.3s ease;
+}
+
+/* Service Card Text Colors */
+
+.services-overview .service-content h3 {
+  color: #cbfcc5; /* Mint */
+}
+
+.services-overview .service-content li {
+  color: #fffcd4; /* Pale Yellow */
+}
+
+.services-overview .service-content ul {
+  color: #fffcd4;
 }
 
 .service-card:hover {
