@@ -1,1 +1,84 @@
+/* Inline lock switches next to generated fields */
+:root{
+  --forest:#1F6F50;
+  --ink:#1C1C1E;
+  --sand:#F3EDE2;
+  font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+}
 
+.detail-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.detail-item .text {
+  min-width: 0;
+}
+
+.lock-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  user-select: none;
+  cursor: pointer;
+}
+
+.lock-toggle input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Switch track */
+.lock-switch {
+  width: 44px;
+  height: 24px;
+  border-radius: 999px;
+  background: rgba(28, 28, 30, 0.18);
+  border: 1px solid rgba(28, 28, 30, 0.12);
+  position: relative;
+  transition: background 0.18s ease, border-color 0.18s ease;
+}
+
+/* Switch knob */
+.lock-switch::after {
+  content: '';
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #fff;
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  transform: translateY(-50%);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+  transition: transform 0.18s ease;
+}
+
+/* Checked state */
+.lock-toggle input:checked + .lock-switch {
+  background: rgba(31, 111, 80, 0.28);
+  border-color: rgba(31, 111, 80, 0.5);
+}
+.lock-toggle input:checked + .lock-switch::after {
+  transform: translate(20px, -50%);
+}
+
+/* Lock icon */
+.lock-icon {
+  font-size: 1rem;
+  line-height: 1;
+  color: #4e6257;
+  width: 1.2rem;
+  text-align: center;
+}
+.lock-toggle input:checked ~ .lock-icon {
+  color: var(--forest);
+}
+
+/* Show 🔓 when unlocked, 🔒 when locked */
+.lock-icon .locked { display: none; }
+.lock-toggle input:checked ~ .lock-icon .unlocked { display: none; }
+.lock-toggle input:checked ~ .lock-icon .locked { display: inline; }
