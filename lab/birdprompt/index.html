@@ -519,7 +519,7 @@
         <div class="history-block">
           <div class="section-header">
             <h2>History</h2>
-            <p class="helper">Last 10 prompts • tap to reload.</p>
+            <p class="helper">Last 3 prompts • tap to reload.</p>
           </div>
           <div id="historyList" class="list-grid">
             <p class="helper">History logs appear after you generate.</p>
@@ -674,7 +674,7 @@
 
         setStatus('Tap generate to invite a feathered muse.');
         loadFavorites();
-        loadHistory();
+        loadHistory(3);
         updatePromptDisplay();
 
         // If you WANT it to auto-generate on load, uncomment:
@@ -1002,7 +1002,7 @@ LIMIT 25
       function logHistory(entry) {
         state.history = state.history.filter(i => i.prompt !== entry.prompt);
         state.history.unshift(entry);
-        if (state.history.length > 10) state.history.pop();
+        if (state.history.length > ) state.history.pop();
         persistHistory();
         renderHistory();
       }
