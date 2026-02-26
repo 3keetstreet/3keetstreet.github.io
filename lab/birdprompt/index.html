@@ -535,6 +535,25 @@
 
   <script>
     (() => {
+            // --- DEBUG: show errors on the page so you don't have to hunt the console ---
+      window.addEventListener('error', (e) => {
+        const msg = e?.message || 'Unknown script error';
+        const el = document.getElementById('statusMessage');
+        if (el) {
+          el.textContent = `JS error: ${msg}`;
+          el.dataset.state = 'error';
+        }
+      });
+
+      window.addEventListener('unhandledrejection', (e) => {
+        const msg = (e?.reason && (e.reason.message || String(e.reason))) || 'Unknown promise rejection';
+        const el = document.getElementById('statusMessage');
+        if (el) {
+          el.textContent = `Fetch error: ${msg}`;
+          el.dataset.state = 'error';
+        }
+      });
+      // --- end debug ---
       const actionsList = [
         'perched on a branch','soaring mid-flight','hunting over water','preening feathers','feeding chicks',
         'calling loudly','wading in shallows','hovering above flowers','diving for fish','dust bathing',
