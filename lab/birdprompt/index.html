@@ -535,6 +535,129 @@
 
   <script>
     (() => {
+// ========= Wikipedia/Wikidata (CORS-safe) random bird =========
+
+function categoryForFilters(filters) {
+  const regionMap = {
+    "North America": "Category:Birds_of_North_America",
+    "South America": "Category:Birds_of_South_America",
+    "Europe": "Category:Birds_of_Europe",
+    "Africa": "Category:Birds_of_Africa",
+    "Asia": "Category:Birds_of_Asia",
+    "Oceania": "Category:Birds_of_Oceania",
+    "Island": "Category:Island_birds"
+  };
+
+  const lifeMap = {
+    "Extinct": "Category:Extinct_birds",
+    "Living": "Category:Birds"
+  };
+
+  if (filters?.region && regionMap[filters.region]) return regionMap[filters.region];
+  if (filters?.lifeStatus && lifeMap[filters.lifeStatus]) return lifeMap[filters.lifeStatus];
+  return "Category:Birds";
+}
+
+function cleanTitleToUrl(title) {
+  return "https://en.wikipedia.org/wiki/" + encodeURIComponent(String(title || "").replace(/ /g, "_"));
+}
+
+async function mwApi(params) {
+  const url = new URL("https://en.wikipedia.org/w/api.php");
+  const p = { ...params, origin: "*", format: "json" };
+  Object.entries(p).forEach(([k, v]) => url.searchParams.set(k, String(v)));
+  const res = await fetch(url.toString(), { headers: { accept: "application/json" } });
+  if (!res.ok) throw new Error("Wikipedia API failed: " + res.status);
+  return res.json();
+}
+
+async function wikidataApi(params) {
+  const url = new URL("https://www.wikidata.org/w/api.php");
+  const p = { ...params, origin: "*", format: "json" };
+  Object.entries(p).forEach(([k, v]) => url.searchParams.set(k, String(v)));
+  const res = await fetch(url.toString(), { headers: { accept: "application/json" } });
+  if (!res.ok) throw new Error("Wikidata API failed: " + res.status);
+  return res.json();
+}
+
+async function getScientificNameFromQid(qid) {
+  if (!qid) return "—";
+  const data = await wikidataApi({
+    action: "wbgetentities",
+    ids: qid,
+    props: "claims"
+  });
+  const ent = data?.entities?.[qid];
+  const p225 = ent?.claims?.P225?.[0]?.mainsnak?.datavalue?.value;
+  return p225 || "—";
+}
+
+async function fetchRandomBird(filters) {
+  const category = categoryForFilters(filters);
+
+  // 1) pull category members
+  const cat = await mwApi({
+    action: "query",
+    list: "categorymembers",
+    cmtitle: category,
+    cmnamespace: "0",
+    cmlimit: "50"
+  });
+
+  const members = cat?.query?.categorymembers || [];
+  if (!members.length) return null;
+
+  const pick = members[Math.floor(Math.random() * members.length)];
+  const pageId = pick.pageid;
+
+  // 2) pull page details (thumb, url, QID)
+  const pageData = await mwApi({
+    action: "query",
+    pageids: String(pageId),
+    prop: "pageimages|pageprops|info",
+    inprop: "url",
+    ppprop: "wikibase_item",
+    piprop: "thumbnail",
+    pithumbsize: "900"
+  });
+
+  const page = pageData?.query?.pages?.[pageId];
+  if (!page) return null;
+
+  const title = page.title || "Unknown bird";
+  const wiki = page.fullurl || cleanTitleToUrl(title);
+  const image =
+    page?.thumbnail?.source ||
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='500'%3E%3C/svg%3E";
+  const qid = page?.pageprops?.wikibase_item;
+
+  const scientificName = await getScientificNameFromQid(qid);
+
+  return {
+    commonName: title,
+    scientificName,
+    lifeStatus: filters?.lifeStatus || (category === "Category:Extinct_birds" ? "Extinct" : "Living"),
+    region: filters?.region || "Any",
+    image,
+    wiki
+  };
+}
+
+async function attemptBirdSelection(filters) {
+  const maxTries = 6;
+  for (let i = 0; i < maxTries; i++) {
+    const bird = await fetchRandomBird(filters);
+    if (!bird) continue;
+
+    if (filters?.region && bird.region !== filters.region) continue;
+    if (filters?.lifeStatus && bird.lifeStatus !== filters.lifeStatus) continue;
+
+    return bird;
+  }
+  return null;
+}
+
+// ========= end random bird block =========      
             // --- DEBUG: show errors on the page so you don't have to hunt the console ---
       window.addEventListener('error', (e) => {
         const msg = e?.message || 'Unknown script error';
