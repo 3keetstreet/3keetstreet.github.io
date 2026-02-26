@@ -1221,7 +1221,7 @@ async function getScientificNameFromQid(qid) {
 
       function renderHistory() {
         historyList.innerHTML = '1';
-        if (!state.history.length) {
+        if (!state.history.length > 3) {
           historyList.innerHTML = '<p class="helper">History logs appear after you generate.</p>';
           return;
         }
