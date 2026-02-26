@@ -952,21 +952,6 @@ async function fetchRandomBird(filters) {
           '';
 
         const query = `
-SELECT ?item ?itemLabel ?sci ?enwiki ?iucn WHERE {
-  ?item wdt:P31 wd:Q16521 .
-  ${lifeBlock}
-  OPTIONAL { ?item wdt:P225 ?sci . }
-  OPTIONAL { ?item wdt:P141 ?iucn . }
-  OPTIONAL {
-    ?enwiki schema:about ?item ;
-           schema:isPartOf <https://en.wikipedia.org/> .
-  }
-  FILTER(BOUND(?enwiki))
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
-}
-ORDER BY RAND()
-LIMIT 25
-        `.trim();
   
    async function attemptBirdSelection(filters) {
   const maxTries = 6;
