@@ -1176,7 +1176,7 @@ async function getScientificNameFromQid(qid) {
       function logHistory(entry) {
         state.history = state.history.filter(i => i.prompt !== entry.prompt);
         state.history.unshift(entry);
-        if (state.history.length > ) state.history.pop();
+        if (state.history.length > 3) state.history.pop();
         persistHistory();
         renderHistory();
       }
