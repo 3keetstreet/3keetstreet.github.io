@@ -754,13 +754,6 @@
         return null;
       }
 
-      async function sparqlQuery(query) {
-        const url = 'https://query.wikidata.org/sparql?format=json&query=' + encodeURIComponent(query);
-        const res = await fetch(url, { headers: { 'accept': 'application/sparql-results+json' } });
-        if (!res.ok) throw new Error('SPARQL failed: ' + res.status);
-        return res.json();
-      }
-
       async function fetchWikiSummary(title) {
         const apiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`;
         const res = await fetch(apiUrl, { headers: { accept: 'application/json' } });
@@ -774,8 +767,55 @@
       }
 
       async function fetchRandomBirdFromWikidata(filters) {
-        // filters: { lifeStatus: 'Living'|'Extinct'|null, region: 'North America'|...|null }
+async function fetchRandomBird(filters) {
+  const category = categoryForFilters(filters);
 
+  // 1) Get a bunch of pages from the category and pick one at random
+  const cat = await mwApi({
+    action: "query",
+    list: "categorymembers",
+    cmtitle: category,
+    cmnamespace: "0",
+    cmlimit: "50"
+  });
+
+  const members = cat?.query?.categorymembers || [];
+  if (!members.length) return null;
+
+  const pick = members[Math.floor(Math.random() * members.length)];
+  const pageId = pick.pageid;
+
+  // 2) Get thumbnail + wikibase_item (QID) + canonical URL + display title
+  const pageData = await mwApi({
+    action: "query",
+    pageids: String(pageId),
+    prop: "pageimages|pageprops|info",
+    inprop: "url",
+    ppprop: "wikibase_item",
+    piprop: "thumbnail",
+    pithumbsize: "900"
+  });
+
+  const page = pageData?.query?.pages?.[pageId];
+  if (!page) return null;
+
+  const title = page.title;
+  const wiki = page.fullurl || cleanTitleToUrl(title);
+  const image = page?.thumbnail?.source || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='500'%3E%3C/svg%3E";
+  const qid = page?.pageprops?.wikibase_item;
+
+  // 3) Get scientific name from Wikidata (P225)
+  const scientificName = await getScientificNameFromQid(qid);
+
+  return {
+    commonName: title,
+    scientificName,
+    lifeStatus: filters.lifeStatus || (category === "Category:Extinct_birds" ? "Extinct" : "Living"),
+    region: filters.region || "Any",
+    image,
+    wiki
+  };
+}
         const extinctClause = `
           ?item wdt:P141 ?iucn .
           FILTER(?iucn IN (wd:Q237350, wd:Q239509))
@@ -809,10 +849,6 @@ ORDER BY RAND()
 LIMIT 25
         `.trim();
 
-        const json = await sparqlQuery(query);
-        const rows = json?.results?.bindings || [];
-        if (!rows.length) return null;
-
         const preferred = rows.find(r => r.sci?.value) || rows[0];
         const commonName = preferred.itemLabel?.value || 'Unknown bird';
         const scientificName = preferred.sci?.value || '—';
@@ -842,18 +878,22 @@ LIMIT 25
         };
       }
 
-      async function attemptBirdSelection(filters) {
-        const maxTries = filters.region ? 10 : 4;
+   async function attemptBirdSelection(filters) {
+  const maxTries = 6;
 
-        for (let i = 0; i < maxTries; i++) {
-          const bird = await fetchRandomBirdFromWikidata(filters);
-          if (!bird) continue;
+  for (let i = 0; i < maxTries; i++) {
+    const bird = await fetchRandomBird(filters);
+    if (!bird) continue;
 
-          if (filters.region && bird.region !== filters.region) continue;
+    // If region was selected, enforce it (because category should match, but just in case)
+    if (filters.region && bird.region !== filters.region) continue;
+    if (filters.lifeStatus && bird.lifeStatus !== filters.lifeStatus) continue;
 
-          return bird;
-        }
-        return null;
+    return bird;
+  }
+
+  return null;
+}
       }
 
       function cacheBird(bird) {
@@ -861,6 +901,66 @@ LIMIT 25
         state.cache.unshift(bird);
         if (state.cache.length > 20) state.cache.pop();
       }
+    function categoryForFilters(filters) {
+  // These categories exist and are a solid starting point.
+  // You can tune/expand later.
+  const regionMap = {
+    "North America": "Category:Birds_of_North_America",
+    "South America": "Category:Birds_of_South_America",
+    "Europe": "Category:Birds_of_Europe",
+    "Africa": "Category:Birds_of_Africa",
+    "Asia": "Category:Birds_of_Asia",
+    "Oceania": "Category:Birds_of_Oceania",
+    "Island": "Category:Island_birds"
+  };
+
+  const lifeMap = {
+    "Extinct": "Category:Extinct_birds",
+    "Living": "Category:Birds"
+  };
+
+  // Prefer a region category if chosen; else use life category; else generic birds.
+  if (filters.region && regionMap[filters.region]) return regionMap[filters.region];
+  if (filters.lifeStatus && lifeMap[filters.lifeStatus]) return lifeMap[filters.lifeStatus];
+  return "Category:Birds";
+}
+
+async function mwApi(params) {
+  const url = new URL("https://en.wikipedia.org/w/api.php");
+  params.origin = "*";              // <-- CORS unlock
+  params.format = "json";
+  for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
+  const res = await fetch(url.toString(), { headers: { "accept": "application/json" } });
+  if (!res.ok) throw new Error("Wikipedia API failed: " + res.status);
+  return res.json();
+}
+
+async function wikidataApi(params) {
+  const url = new URL("https://www.wikidata.org/w/api.php");
+  params.origin = "*";              // <-- CORS unlock
+  params.format = "json";
+  for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
+  const res = await fetch(url.toString(), { headers: { "accept": "application/json" } });
+  if (!res.ok) throw new Error("Wikidata API failed: " + res.status);
+  return res.json();
+}
+
+function cleanTitleToUrl(title) {
+  return "https://en.wikipedia.org/wiki/" + encodeURIComponent(title.replace(/ /g, "_"));
+}
+
+async function getScientificNameFromQid(qid) {
+  if (!qid) return "—";
+  const data = await wikidataApi({
+    action: "wbgetentities",
+    ids: qid,
+    props: "claims"
+  });
+
+  const ent = data?.entities?.[qid];
+  const p225 = ent?.claims?.P225?.[0]?.mainsnak?.datavalue?.value;
+  return p225 || "—";
+}
 
       async function handleGenerate() {
         if (state.isGenerating) return;
