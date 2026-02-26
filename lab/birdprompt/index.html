@@ -1,26 +1,29 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bird Art Prompt Randomizer</title>
+
+  <!-- If you're using an external CSS file, keep this. Otherwise you can delete it. -->
+  <!-- <link rel="stylesheet" href="./birdprompt.css"> -->
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700&family=Source+Sans+3:wght@400;500;600&display=swap');
+
     :root {
       --forest: #1F6F50;
       --ink: #1C1C1E;
       --sand: #F3EDE2;
-      --sky: #E6F3F8;
       --card: rgba(255, 255, 255, 0.92);
       --border: rgba(31, 111, 80, 0.17);
       --shadow: 0 20px 45px rgba(12, 32, 20, 0.12);
       font-family: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
       background-color: var(--sand);
     }
-    * {
-      box-sizing: border-box;
-    }
+
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -30,15 +33,10 @@
       justify-content: center;
       padding: 2rem 1rem 3rem;
     }
-    .page-shell {
-      width: 100%;
-      max-width: 960px;
-    }
-    .page {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
+
+    .page-shell { width: 100%; max-width: 960px; }
+    .page { display: flex; flex-direction: column; gap: 1rem; }
+
     .card {
       background: var(--card);
       border-radius: 22px;
@@ -46,23 +44,16 @@
       box-shadow: var(--shadow);
       border: 1px solid var(--border);
     }
-    .hero-card {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
+
+    .hero-card { display: flex; flex-direction: column; gap: 1rem; }
     .hero-copy h1 {
       margin: 0 0 0.2rem;
-      font-family: 'Inter', 'Poppins', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: clamp(2rem, 4vw, 2.8rem);
       line-height: 1.1;
       color: var(--ink);
     }
-    .hero-copy p {
-      margin: 0;
-      color: #2f3430;
-      font-size: 1rem;
-    }
+    .hero-copy p { margin: 0; color: #2f3430; font-size: 1rem; }
     .eyebrow {
       text-transform: uppercase;
       letter-spacing: 0.25em;
@@ -70,11 +61,9 @@
       color: #4e6257;
       margin: 0;
     }
-    .hero-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
+
+    .hero-actions { display: flex; flex-direction: column; gap: 0.75rem; }
+
     .primary-btn {
       border: none;
       background: var(--forest);
@@ -91,18 +80,10 @@
       transition: transform 0.15s ease, box-shadow 0.15s ease;
       box-shadow: 0 10px 20px rgba(31, 111, 80, 0.3);
     }
-    .primary-btn:disabled {
-      opacity: 0.65;
-      cursor: wait;
-      box-shadow: none;
-    }
-    .primary-btn:not(:disabled):active {
-      transform: translateY(1px);
-      box-shadow: 0 6px 10px rgba(31, 111, 80, 0.35);
-    }
+    .primary-btn:disabled { opacity: 0.65; cursor: wait; box-shadow: none; }
+    .primary-btn:not(:disabled):active { transform: translateY(1px); box-shadow: 0 6px 10px rgba(31, 111, 80, 0.35); }
     .primary-btn .spinner {
-      width: 18px;
-      height: 18px;
+      width: 18px; height: 18px;
       border: 2px solid rgba(255, 255, 255, 0.5);
       border-top-color: #f3ede2;
       border-radius: 50%;
@@ -110,24 +91,18 @@
       opacity: 0;
       transition: opacity 0.18s ease;
     }
-    .primary-btn.loading .spinner {
-      opacity: 1;
-    }
-    .primary-btn .btn-label {
-      display: inline-block;
-    }
+    .primary-btn.loading .spinner { opacity: 1; }
+    .primary-btn.loading { pointer-events: none; }
+
     .status {
       margin: 0;
       font-size: 0.9rem;
       color: #4e6257;
       min-height: 1.2rem;
     }
-    .status[data-state='error'] {
-      color: #b00020;
-    }
-    .status[data-state='success'] {
-      color: var(--forest);
-    }
+    .status[data-state='error'] { color: #b00020; }
+    .status[data-state='success'] { color: var(--forest); }
+
     .filters-card {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -155,51 +130,10 @@
       box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
       transition: border 0.2s ease;
     }
-    .filter-group select:focus {
-      border-color: var(--forest);
-    }
-    .locks-card {
-      padding-top: 1.25rem;
-    }
-    .lock-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 0.75rem;
-    }
-    .lock-btn {
-      border: 1px solid rgba(28, 28, 30, 0.1);
-      background: #fff;
-      border-radius: 16px;
-      padding: 0.65rem;
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      justify-content: center;
-      transition: all 0.2s ease;
-      color: var(--ink);
-    }
-    .lock-btn .icon {
-      font-size: 1rem;
-    }
-    .lock-btn.active {
-      border-color: var(--forest);
-      background: rgba(31, 111, 80, 0.12);
-      color: var(--forest);
-      box-shadow: 0 10px 20px rgba(31, 111, 80, 0.15);
-    }
-    .prompt-card {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-    .prompt-output {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
+    .filter-group select:focus { border-color: var(--forest); }
+
+    .prompt-card { display: flex; flex-direction: column; gap: 1.25rem; }
+    .prompt-output { display: flex; flex-direction: column; gap: 0.75rem; }
     .prompt-output .label {
       font-size: 0.85rem;
       text-transform: uppercase;
@@ -218,6 +152,7 @@
       position: relative;
       overflow: hidden;
     }
+
     .ghost-btn {
       align-self: flex-end;
       background: transparent;
@@ -230,73 +165,93 @@
       cursor: pointer;
       transition: all 0.18s ease;
     }
-    .ghost-btn:active {
-      transform: translateY(1px);
+    .ghost-btn:active { transform: translateY(1px); }
+
+    /* Details + lock switches */
+    .bird-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.9rem;
     }
-   <div class="bird-details">
-  <div class="detail-item">
-    <div class="text">
-      <p class="label">Common Name</p>
-      <p class="value" id="birdCommon">—</p>
-    </div>
-    <label class="lock-toggle" title="Lock bird">
-      <input type="checkbox" id="lockBird" />
-      <span class="lock-switch" aria-hidden="true"></span>
-      <span class="lock-icon" aria-hidden="true">
-        <span class="unlocked">🔓</span><span class="locked">🔒</span>
-      </span>
-    </label>
-  </div>
-
-  <div class="detail-item">
-    <div class="text">
-      <p class="label">Scientific Name</p>
-      <p class="value"><em id="scientificName">—</em></p>
-    </div>
-    <!-- tied to Lock Bird -->
-    <span></span>
-  </div>
-
-  <div class="detail-item">
-    <div class="text">
-      <p class="label">Life Status</p>
-      <p class="value" id="detailLifeStatus">—</p>
-    </div>
-    <label class="lock-toggle" title="Lock life status">
-      <input type="checkbox" id="lockLifeStatus" />
-      <span class="lock-switch" aria-hidden="true"></span>
-      <span class="lock-icon" aria-hidden="true">
-        <span class="unlocked">🔓</span><span class="locked">🔒</span>
-      </span>
-    </label>
-  </div>
-
-  <div class="detail-item">
-    <div class="text">
-      <p class="label">Region</p>
-      <p class="value" id="detailRegion">—</p>
-    </div>
-    <label class="lock-toggle" title="Lock region">
-      <input type="checkbox" id="lockRegion" />
-      <span class="lock-switch" aria-hidden="true"></span>
-      <span class="lock-icon" aria-hidden="true">
-        <span class="unlocked">🔓</span><span class="locked">🔒</span>
-      </span>
-    </label>
-  </div>
-</div>
+    .detail-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 0.8rem;
+      border: 1px solid rgba(28, 28, 30, 0.06);
+      background: rgba(255,255,255,0.7);
+      border-radius: 14px;
+      padding: 0.85rem 0.9rem;
+    }
+    .detail-item .label {
+      margin: 0 0 0.2rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #4e6257;
     }
     .value {
       margin: 0;
       font-size: 1rem;
       font-weight: 600;
       color: var(--ink);
+      word-break: break-word;
     }
-    .value em {
-      font-style: italic;
-      color: #3c423d;
-      font-weight: 500;
+    .value em { font-style: italic; color: #3c423d; font-weight: 500; }
+
+    .lock-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      user-select: none;
+      cursor: pointer;
     }
+    .lock-toggle input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .lock-switch {
+      width: 44px;
+      height: 24px;
+      border-radius: 999px;
+      background: rgba(28, 28, 30, 0.18);
+      border: 1px solid rgba(28, 28, 30, 0.12);
+      position: relative;
+      transition: background 0.18s ease, border-color 0.18s ease;
+    }
+    .lock-switch::after {
+      content: '';
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: #fff;
+      position: absolute;
+      top: 50%;
+      left: 3px;
+      transform: translateY(-50%);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+      transition: transform 0.18s ease;
+    }
+    .lock-toggle input:checked + .lock-switch {
+      background: rgba(31, 111, 80, 0.28);
+      border-color: rgba(31, 111, 80, 0.5);
+    }
+    .lock-toggle input:checked + .lock-switch::after {
+      transform: translate(20px, -50%);
+    }
+    .lock-icon {
+      font-size: 1rem;
+      line-height: 1;
+      color: #4e6257;
+      width: 1.2rem;
+      text-align: center;
+    }
+    .lock-toggle input:checked ~ .lock-icon { color: var(--forest); }
+    .lock-icon .locked { display: none; }
+    .lock-toggle input:checked ~ .lock-icon .unlocked { display: none; }
+    .lock-toggle input:checked ~ .lock-icon .locked { display: inline; }
+
     .reference-panel figure {
       margin: 0;
       display: flex;
@@ -310,6 +265,8 @@
       min-height: 180px;
       max-height: 360px;
       display: block;
+      background: rgba(255,255,255,0.8);
+      border: 1px solid rgba(31, 111, 80, 0.18);
     }
     .reference-panel a {
       display: inline-flex;
@@ -320,15 +277,10 @@
       text-decoration: none;
       font-size: 0.95rem;
     }
-    .reference-panel a:hover {
-      text-decoration: underline;
-    }
-    .favorites-history {
-      display: grid;
-      gap: 1rem;
-    }
-    .favorites-block,
-    .history-block {
+    .reference-panel a:hover { text-decoration: underline; }
+
+    .favorites-history { display: grid; gap: 1rem; }
+    .favorites-block, .history-block {
       background: #fff;
       border-radius: 18px;
       padding: 1.25rem;
@@ -343,7 +295,7 @@
     }
     .section-header h2 {
       margin: 0;
-      font-family: 'Inter', 'Poppins', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 1.2rem;
     }
     .secondary-btn {
@@ -356,43 +308,27 @@
       cursor: pointer;
       transition: all 0.18s ease;
     }
-    .secondary-btn:active {
-      transform: translateY(1px);
-    }
-    .list-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 0.9rem;
-      margin-top: 0.8rem;
-    }
-    .helper {
-      margin: 0;
-      font-size: 0.85rem;
-      color: #5c655e;
-    }
-    .favorite-card,
-    .history-card {
+    .secondary-btn:active { transform: translateY(1px); }
+
+    .list-grid { display: flex; flex-direction: column; gap: 0.9rem; margin-top: 0.8rem; }
+    .helper { margin: 0; font-size: 0.85rem; color: #5c655e; }
+
+    .favorite-card, .history-card {
       border: 1px solid rgba(31, 111, 80, 0.2);
       border-radius: 14px;
       padding: 0.9rem 1rem;
       background: #f9fafc;
       box-shadow: 0 8px 12px rgba(0, 0, 0, 0.05);
     }
-    .prompt-snippet {
-      margin: 0 0 0.5rem;
-      font-size: 0.95rem;
-      line-height: 1.3;
-    }
-    .history-actions,
-    .favorite-meta {
+    .prompt-snippet { margin: 0 0 0.5rem; font-size: 0.95rem; line-height: 1.3; }
+    .history-actions, .favorite-meta {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 0.5rem;
       flex-wrap: wrap;
     }
-    .history-actions button,
-    .favorite-meta button {
+    .history-actions button, .favorite-meta button {
       border: none;
       background: rgba(31, 111, 80, 0.12);
       color: var(--forest);
@@ -402,14 +338,9 @@
       cursor: pointer;
       transition: background 0.2s ease;
     }
-    .history-actions button:hover,
-    .favorite-meta button:hover {
-      background: rgba(31, 111, 80, 0.2);
-    }
-    .timestamp {
-      font-size: 0.8rem;
-      color: #5c655e;
-    }
+    .history-actions button:hover, .favorite-meta button:hover { background: rgba(31, 111, 80, 0.2); }
+    .timestamp { font-size: 0.8rem; color: #5c655e; }
+
     .footer-card {
       margin-top: 1rem;
       text-align: center;
@@ -418,60 +349,25 @@
       border-radius: 18px;
       border: 1px solid rgba(28, 28, 30, 0.08);
     }
-    .favorite-card button {
-      margin-left: auto;
-    }
-    .primary-btn.loading {
-      pointer-events: none;
-    }
-    .prompt-card.fresh {
-      animation: softGlow 0.7s ease;
-    }
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
+
+    .prompt-card.fresh { animation: softGlow 0.7s ease; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
     @keyframes softGlow {
-      0% {
-        transform: translateY(6px);
-        opacity: 0.85;
-      }
-      100% {
-        transform: translateY(0);
-        opacity: 1;
-      }
+      0% { transform: translateY(6px); opacity: 0.85; }
+      100% { transform: translateY(0); opacity: 1; }
     }
+
     @media (min-width: 768px) {
-      .hero-actions {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .hero-card {
-        flex-direction: row;
-        align-items: flex-start;
-        justify-content: space-between;
-      }
-      .hero-copy {
-        max-width: 60%;
-      }
-      .prompt-card {
-        flex-direction: column;
-      }
-      .reference-panel img {
-        min-height: 220px;
-      }
-      .favorites-history {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-      .filters-card {
-        grid-template-columns: repeat(2, minmax(220px, 1fr));
-      }
+      .hero-actions { flex-direction: row; align-items: center; justify-content: space-between; }
+      .hero-card { flex-direction: row; align-items: flex-start; justify-content: space-between; }
+      .hero-copy { max-width: 60%; }
+      .favorites-history { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .filters-card { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
     }
-<link rel="stylesheet" href="./birdprompt.css">
   </style>
 </head>
+
 <body>
   <div class="page-shell">
     <main class="page" aria-live="polite">
@@ -489,6 +385,7 @@
           <p id="statusMessage" class="status" aria-live="polite">Tap generate to invite a feathered muse.</p>
         </div>
       </header>
+
       <section class="card filters-card">
         <div class="filter-group">
           <label for="lifeSelect">Life Status <span class="icon">🪶</span></label>
@@ -498,6 +395,7 @@
             <option value="Extinct">Extinct</option>
           </select>
         </div>
+
         <div class="filter-group">
           <label for="regionSelect">Region <span class="icon">📍</span></label>
           <select id="regionSelect">
@@ -512,39 +410,101 @@
           </select>
         </div>
       </section>
+
       <section class="card prompt-card">
         <div class="prompt-output">
           <p class="label">Prompt</p>
           <div class="prompt-text" id="promptText">Tap “Generate Prompt” to start.</div>
           <button id="copyPrompt" class="ghost-btn" type="button">Copy Prompt</button>
         </div>
+
         <div class="bird-details">
-          <div>
-            <p class="label">Common Name</p>
-            <p class="value" id="birdCommon">—</p>
+          <div class="detail-item">
+            <div>
+              <p class="label">Bird</p>
+              <p class="value" id="birdCommon">—</p>
+              <p class="value"><em id="scientificName">—</em></p>
+            </div>
+            <label class="lock-toggle" title="Lock bird">
+              <input type="checkbox" id="lockBird" />
+              <span class="lock-switch" aria-hidden="true"></span>
+              <span class="lock-icon" aria-hidden="true"><span class="unlocked">🔓</span><span class="locked">🔒</span></span>
+            </label>
           </div>
-          <div>
-            <p class="label">Scientific Name</p>
-            <p class="value"><em id="scientificName">—</em></p>
+
+          <div class="detail-item">
+            <div>
+              <p class="label">Action</p>
+              <p class="value" id="detailAction">—</p>
+            </div>
+            <label class="lock-toggle" title="Lock action">
+              <input type="checkbox" id="lockAction" />
+              <span class="lock-switch" aria-hidden="true"></span>
+              <span class="lock-icon" aria-hidden="true"><span class="unlocked">🔓</span><span class="locked">🔒</span></span>
+            </label>
           </div>
-          <div>
-            <p class="label">Life Status</p>
-            <p class="value" id="detailLifeStatus">—</p>
+
+          <div class="detail-item">
+            <div>
+              <p class="label">Style</p>
+              <p class="value" id="detailStyle">—</p>
+            </div>
+            <label class="lock-toggle" title="Lock style">
+              <input type="checkbox" id="lockStyle" />
+              <span class="lock-switch" aria-hidden="true"></span>
+              <span class="lock-icon" aria-hidden="true"><span class="unlocked">🔓</span><span class="locked">🔒</span></span>
+            </label>
           </div>
-          <div>
-            <p class="label">Region</p>
-            <p class="value" id="detailRegion">—</p>
+
+          <div class="detail-item">
+            <div>
+              <p class="label">View</p>
+              <p class="value" id="detailView">—</p>
+            </div>
+            <label class="lock-toggle" title="Lock view">
+              <input type="checkbox" id="lockView" />
+              <span class="lock-switch" aria-hidden="true"></span>
+              <span class="lock-icon" aria-hidden="true"><span class="unlocked">🔓</span><span class="locked">🔒</span></span>
+            </label>
+          </div>
+
+          <div class="detail-item">
+            <div>
+              <p class="label">Life Status</p>
+              <p class="value" id="detailLifeStatus">—</p>
+            </div>
+            <label class="lock-toggle" title="Lock life status">
+              <input type="checkbox" id="lockLifeStatus" />
+              <span class="lock-switch" aria-hidden="true"></span>
+              <span class="lock-icon" aria-hidden="true"><span class="unlocked">🔓</span><span class="locked">🔒</span></span>
+            </label>
+          </div>
+
+          <div class="detail-item">
+            <div>
+              <p class="label">Region</p>
+              <p class="value" id="detailRegion">—</p>
+            </div>
+            <label class="lock-toggle" title="Lock region">
+              <input type="checkbox" id="lockRegion" />
+              <span class="lock-switch" aria-hidden="true"></span>
+              <span class="lock-icon" aria-hidden="true"><span class="unlocked">🔓</span><span class="locked">🔒</span></span>
+            </label>
           </div>
         </div>
+
         <div class="reference-panel">
           <figure>
-            <img id="referenceImage" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3C/svg%3E" alt="Bird reference will appear here" loading="lazy" />
+            <img id="referenceImage"
+                 src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='500'%3E%3C/svg%3E"
+                 alt="Bird reference will appear here" loading="lazy" />
             <figcaption>
               <a id="referenceLink" href="#" target="_blank" rel="noreferrer">Source image on Wikipedia ↗</a>
             </figcaption>
           </figure>
         </div>
       </section>
+
       <section class="card favorites-history">
         <div class="favorites-block">
           <div class="section-header">
@@ -555,6 +515,7 @@
             <p class="helper">Save prompts you love to revisit.</p>
           </div>
         </div>
+
         <div class="history-block">
           <div class="section-header">
             <h2>History</h2>
@@ -566,140 +527,44 @@
         </div>
       </section>
     </main>
+
     <footer class="footer-card card">
-      <p>Images from Wikipedia/Wikimedia. Data from Wikidata. No tracking — favorites & history stay local.</p>
+      <p>Images + data from Wikipedia/Wikidata. No tracking — favorites & history stay local.</p>
     </footer>
   </div>
+
   <script>
     (() => {
       const actionsList = [
-        'perched on a branch',
-        'soaring mid-flight',
-        'hunting over water',
-        'preening feathers',
-        'feeding chicks',
-        'calling loudly',
-        'wading in shallows',
-        'dust bathing',
-        'opening wings to sun',
-        'gliding over cliffs',
-        'nesting on a ledge',
-        'scratching the ground',
-        'balancing on a reed',
-        'resting on driftwood',
-        'chasing insects',
-        'carrying nesting material',
-        'strutting on display',
-        'swimming calmly',
-        'leaping from a perch',
-        'shaking off rain'
+        'perched on a branch','soaring mid-flight','hunting over water','preening feathers','feeding chicks',
+        'calling loudly','wading in shallows','hovering above flowers','diving for fish','dust bathing',
+        'opening wings to sun','gliding over cliffs','nesting on a ledge','pecking at bark','scratching the ground',
+        'balancing on a reed','resting on driftwood','chasing insects','carrying nesting material','sipping nectar',
+        'strutting on display','swimming calmly','leaping from a perch','shaking off rain'
       ];
+
       const stylesList = [
-        'watercolor wash',
-        'ink line art',
-        'low-poly geometric',
-        'charcoal sketch',
-        'pastel painting',
-        'cyberpunk neon',
-        'minimal flat',
-        'photorealistic study',
-        'abstract shapes',
-        'stained-glass mosaic',
-        'impressionist brushwork',
-        'paper cut-out',
-        'bold poster art',
-        'pixel art',
-        'colored pencil',
-        'mid-century modern'
+        'watercolor wash','ink line art','vintage field-guide plate','low-poly geometric','charcoal sketch',
+        'pastel painting','cyberpunk neon','ukiyo-e inspired','minimal flat','photorealistic study',
+        'abstract shapes','stained-glass mosaic','impressionist brushwork','paper cut-out','bold poster art',
+        'pixel art','colored pencil','mid-century modern'
       ];
+
       const viewsList = [
-        'side profile',
-        'three-quarter view',
-        'frontal portrait',
-        'top-down',
-        'wings spread',
-        'close-up headshot',
-        'full-body',
-        'in-environment scene',
-        'silhouette at sunset',
-        'artist choice'
+        'side profile','three-quarter view','frontal portrait','top-down','wings spread','close-up headshot',
+        'full-body','in-environment scene','silhouette at sunset','macro detail of plumage'
       ];
-      const birds = [
-        {
-          commonName: 'Northern Cardinal',
-          scientificName: 'Cardinalis cardinalis',
-          lifeStatus: 'Living',
-          region: 'North America',
-          image: 'https://upload.wikimedia.org/wikipedia/commons/1/1f/Cardinalis_cardinalis_male.jpg',
-          wiki: 'https://en.wikipedia.org/wiki/Northern_cardinal'
-        },
-        {
-          commonName: 'Passenger Pigeon',
-          scientificName: 'Ectopistes migratorius',
-          lifeStatus: 'Extinct',
-          region: 'North America',
-          image: 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Ectopistes_migratorius.jpg',
-          wiki: 'https://en.wikipedia.org/wiki/Passenger_pigeon'
-        },
-        {
-          commonName: 'Scarlet Macaw',
-          scientificName: 'Ara macao',
-          lifeStatus: 'Living',
-          region: 'South America',
-          image: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Scarlet_Macaw_-_Ara_macao_Luc_Viatour.jpg',
-          wiki: 'https://en.wikipedia.org/wiki/Scarlet_macaw'
-        },
-        {
-          commonName: 'Hoatzin',
-          scientificName: 'Opisthocomus hoazin',
-          lifeStatus: 'Living',
-          region: 'South America',
-          image: 'https://upload.wikimedia.org/wikipedia/commons/7/77/Hoatzin_-_clean_background.jpg',
-          wiki: 'https://en.wikipedia.org/wiki/Hoatzin'
-        },
-        {
-          commonName: 'Atlantic Puffin',
-          scientificName: 'Fratercula arctica',
-          lifeStatus: 'Living',
-          region: 'Europe',
-          image: 'https://upload.wikimedia.org/wikipedia/commons/3/3d/Atlantic_Puffin_Puffinus_puffinus.jpg',
-          wiki: 'https://en.wikipedia.org/wiki/Atlantic_puffin'
-        },
-        {
-          commonName: 'Lilac-breasted Roller',
-          scientificName: 'Coracias caudatus',
-          lifeStatus: 'Living',
-          region: 'Africa',
-          image: 'https://upload.wikimedia.org/wikipedia/commons/4/48/Lilac-breasted_Roller_2_-_color.jpg',
-          wiki: 'https://en.wikipedia.org/wiki/Lilac-breasted_roller'
-        },
-        {
-          commonName: 'Philippine Eagle',
-          scientificName: 'Pithecophaga jefferyi',
-          lifeStatus: 'Living',
-          region: 'Asia',
-          image: 'https://upload.wikimedia.org/wikipedia/commons/e/e4/Philippine_Eagle_Pithecophaga_jefferyi.jpg',
-          wiki: 'https://en.wikipedia.org/wiki/Philippine_eagle'
-        },
-        {
-          commonName: 'Kākāpō',
-          scientificName: 'Strigops habroptilus',
-          lifeStatus: 'Living',
-          region: 'Oceania',
-          image: 'https://upload.wikimedia.org/wikipedia/commons/7/76/Kakapo_2.jpg',
-          wiki: 'https://en.wikipedia.org/wiki/Kakapo'
-        },
-        {
-          commonName: 'Dodo',
-          scientificName: 'Raphus cucullatus',
-          lifeStatus: 'Extinct',
-          region: 'Island',
-          image: 'https://upload.wikimedia.org/wikipedia/commons/3/32/Raphus_cucullatus_-_K%c3%b6nigl._Nat._Hist._Mus._Stockholm_-_Archaeology_-_Unknown_-_Unknown.jpg',
-          wiki: 'https://en.wikipedia.org/wiki/Dodo'
-        }
+
+      // Fallback list in case Wikidata is down / rate-limiting (rare, but nice)
+      const fallbackBirds = [
+        { commonName:'Northern Cardinal', scientificName:'Cardinalis cardinalis', wiki:'https://en.wikipedia.org/wiki/Northern_cardinal', lifeStatus:'Living', region:'North America' },
+        { commonName:'Passenger Pigeon', scientificName:'Ectopistes migratorius', wiki:'https://en.wikipedia.org/wiki/Passenger_pigeon', lifeStatus:'Extinct', region:'North America' },
+        { commonName:'Kākāpō', scientificName:'Strigops habroptilus', wiki:'https://en.wikipedia.org/wiki/Kakapo', lifeStatus:'Living', region:'Oceania' }
       ];
+
       const favoritesKey = 'birdPromptFavorites';
       const historyKey = 'birdPromptHistory';
+
       const state = {
         currentBird: null,
         currentAction: '',
@@ -721,431 +586,199 @@
         history: [],
         isGenerating: false
       };
-      let generateBtn;
-      let copyBtn;
-      let saveFavoriteBtn;
-      let lifeSelect;
-      let regionSelect;
-      let statusMessage;
-      let promptText;
-      let birdCommonEl;
-      let scientificEl;
-      let detailLifeStatus;
-      let detailRegion;
-      let referenceImage;
-      let referenceLink;
-      let favoritesList;
-      let historyList;
-      let promptCard;
-      let lockBirdToggle;
-      let lockLifeToggle;
-      let lockRegionToggle;
+
+      let generateBtn, copyBtn, saveFavoriteBtn;
+      let lifeSelect, regionSelect, statusMessage, promptText, promptCard;
+      let birdCommonEl, scientificEl, detailLifeStatus, detailRegion;
+      let detailActionEl, detailStyleEl, detailViewEl;
+      let referenceImage, referenceLink;
+      let favoritesList, historyList;
+
+      let lockBirdToggle, lockActionToggle, lockStyleToggle, lockViewToggle, lockLifeToggle, lockRegionToggle;
+
       document.addEventListener('DOMContentLoaded', () => {
         generateBtn = document.getElementById('generateBtn');
         copyBtn = document.getElementById('copyPrompt');
         saveFavoriteBtn = document.getElementById('saveFavorite');
+
         lifeSelect = document.getElementById('lifeSelect');
         regionSelect = document.getElementById('regionSelect');
+
         statusMessage = document.getElementById('statusMessage');
         promptText = document.getElementById('promptText');
+        promptCard = document.querySelector('.prompt-card');
+
         birdCommonEl = document.getElementById('birdCommon');
         scientificEl = document.getElementById('scientificName');
         detailLifeStatus = document.getElementById('detailLifeStatus');
         detailRegion = document.getElementById('detailRegion');
+
+        detailActionEl = document.getElementById('detailAction');
+        detailStyleEl = document.getElementById('detailStyle');
+        detailViewEl = document.getElementById('detailView');
+
         referenceImage = document.getElementById('referenceImage');
         referenceLink = document.getElementById('referenceLink');
+
         favoritesList = document.getElementById('favoritesList');
         historyList = document.getElementById('historyList');
-        promptCard = document.querySelector('.prompt-card');
+
         lockBirdToggle = document.getElementById('lockBird');
-lockLifeToggle = document.getElementById('lockLifeStatus');
-lockRegionToggle = document.getElementById('lockRegion');
+        lockActionToggle = document.getElementById('lockAction');
+        lockStyleToggle = document.getElementById('lockStyle');
+        lockViewToggle = document.getElementById('lockView');
+        lockLifeToggle = document.getElementById('lockLifeStatus');
+        lockRegionToggle = document.getElementById('lockRegion');
 
-// initialize UI from state
-if (lockBirdToggle) lockBirdToggle.checked = state.locks.bird;
-if (lockLifeToggle) lockLifeToggle.checked = state.locks.lifeStatus;
-if (lockRegionToggle) lockRegionToggle.checked = state.locks.region;
+        // init toggles
+        lockBirdToggle.checked = state.locks.bird;
+        lockActionToggle.checked = state.locks.action;
+        lockStyleToggle.checked = state.locks.style;
+        lockViewToggle.checked = state.locks.view;
+        lockLifeToggle.checked = state.locks.lifeStatus;
+        lockRegionToggle.checked = state.locks.region;
 
-// sync state from UI
-if (lockBirdToggle) {
-  lockBirdToggle.addEventListener('change', () => {
-    state.locks.bird = lockBirdToggle.checked;
-  });
-}
-if (lockLifeToggle) {
-  lockLifeToggle.addEventListener('change', () => {
-    state.locks.lifeStatus = lockLifeToggle.checked;
-  });
-}
-if (lockRegionToggle) {
-  lockRegionToggle.addEventListener('change', () => {
-    state.locks.region = lockRegionToggle.checked;
-  });
-}
+        // sync state from UI
+        lockBirdToggle.addEventListener('change', () => state.locks.bird = lockBirdToggle.checked);
+        lockActionToggle.addEventListener('change', () => state.locks.action = lockActionToggle.checked);
+        lockStyleToggle.addEventListener('change', () => state.locks.style = lockStyleToggle.checked);
+        lockViewToggle.addEventListener('change', () => state.locks.view = lockViewToggle.checked);
+        lockLifeToggle.addEventListener('change', () => state.locks.lifeStatus = lockLifeToggle.checked);
+        lockRegionToggle.addEventListener('change', () => state.locks.region = lockRegionToggle.checked);
+
         generateBtn.addEventListener('click', handleGenerate);
         copyBtn.addEventListener('click', copyPrompt);
         saveFavoriteBtn.addEventListener('click', saveFavorite);
+
         historyList.addEventListener('click', handleHistoryClick);
         favoritesList.addEventListener('click', handleFavoriteClick);
+
         setStatus('Tap generate to invite a feathered muse.');
         loadFavorites();
         loadHistory();
         updatePromptDisplay();
-        handleGenerate();
+
+        // If you WANT it to auto-generate on load, uncomment:
+        // handleGenerate();
       });
+
       function setStatus(message, type = 'info') {
-        if (!statusMessage) return;
         statusMessage.textContent = message;
         statusMessage.dataset.state = type;
       }
+
       function toggleGenerateState(isLoading) {
-        if (!generateBtn) return;
         generateBtn.disabled = isLoading;
         generateBtn.classList.toggle('loading', isLoading);
         generateBtn.setAttribute('aria-busy', isLoading ? 'true' : 'false');
       }
+
       function pickRandom(list, exclude) {
         if (!list.length) return '';
         if (list.length === 1) return list[0];
         let choice = list[Math.floor(Math.random() * list.length)];
         if (choice === exclude) {
-          const altList = list.filter((item) => item !== exclude);
-          choice = altList[Math.floor(Math.random() * altList.length)];
+          const alt = list.filter(x => x !== exclude);
+          choice = alt[Math.floor(Math.random() * alt.length)];
         }
         return choice;
       }
-      async function attemptBirdSelection(filters) {
-  // If region filter is set, retry a few times until the summary buckets correctly.
-  const maxTries = filters.region ? 8 : 3;
 
-  for (let i = 0; i < maxTries; i++) {
-    const bird = await fetchRandomBirdFromWikidata(filters);
-    if (!bird) continue;
-
-    // If user requested a specific region, enforce it
-    if (filters.region && bird.region !== filters.region) continue;
-
-    return bird;
-  }
-
-  return null;
-}
-        });
-        if (matches.length) {
-          return matches[Math.floor(Math.random() * matches.length)];
-        }
-        const cacheMatches = state.cache.filter((bird) => {
-          const lifeMatch = filters.lifeStatus ? bird.lifeStatus === filters.lifeStatus : true;
-          const regionMatch = filters.region ? bird.region === filters.region : true;
-          return lifeMatch && regionMatch;
-        });
-        if (cacheMatches.length) {
-          return cacheMatches[0];
-        }
-        return null;
-      }
-      function cacheBird(bird) {
-        state.cache = state.cache.filter((entry) => entry.commonName !== bird.commonName);
-        state.cache.unshift(bird);
-        if (state.cache.length > 20) {
-          state.cache.pop();
-        }
-      }
       function formatPrompt(bird, style, view, action) {
-        const lifeLower = bird.lifeStatus.toLowerCase();
-        return `Create a ${style} depiction of a ${bird.commonName} (${bird.scientificName}), ${view} view, ${action}. Region inspiration: ${bird.region}. Life status: ${lifeLower}.`;
+        const lifeLower = (bird.lifeStatus || 'Living').toLowerCase();
+        const regionText = bird.region && bird.region !== 'Any' ? bird.region : 'anywhere';
+        return `Create a ${style} depiction of a ${bird.commonName} (${bird.scientificName}), ${view} view, ${action}. Region inspiration: ${regionText}. Life status: ${lifeLower}.`;
       }
+
       function updatePromptDisplay() {
-        if (!promptText) return;
         promptText.textContent = state.currentPromptText || 'Tap “Generate Prompt” to start.';
+
         birdCommonEl.textContent = state.currentBird ? state.currentBird.commonName : '—';
         scientificEl.textContent = state.currentBird ? state.currentBird.scientificName : '—';
         detailLifeStatus.textContent = state.currentBird ? state.currentBird.lifeStatus : '—';
         detailRegion.textContent = state.currentBird ? state.currentBird.region : '—';
+
+        detailActionEl.textContent = state.currentAction || '—';
+        detailStyleEl.textContent = state.currentStyle || '—';
+        detailViewEl.textContent = state.currentView || '—';
+
         if (state.currentBird) {
-          referenceImage.src = state.currentBird.image;
+          referenceImage.src = state.currentBird.image || blankImg();
           referenceImage.alt = `${state.currentBird.commonName} reference`;
-          referenceLink.href = state.currentBird.wiki;
+          referenceLink.href = state.currentBird.wiki || '#';
           referenceLink.textContent = 'Source image on Wikipedia ↗';
+        } else {
+          referenceImage.src = blankImg();
+          referenceLink.href = '#';
         }
+
         if (promptCard) {
           promptCard.classList.add('fresh');
           setTimeout(() => promptCard.classList.remove('fresh'), 800);
         }
       }
-      async function handleGenerate() {
-  if (state.isGenerating) return;
-  state.isGenerating = true;
-  setStatus('Finding a bird…');
-  toggleGenerateState(true);
 
-  try {
-    const lifeFilter = state.locks.lifeStatus && state.currentLifeStatus
-      ? state.currentLifeStatus
-      : (lifeSelect.value !== 'Any' ? lifeSelect.value : null);
-
-    const regionFilter = state.locks.region && state.currentRegion
-      ? state.currentRegion
-      : (regionSelect.value !== 'Any' ? regionSelect.value : null);
-
-    const filters = { lifeStatus: lifeFilter, region: regionFilter };
-
-    const selectedBird = state.locks.bird && state.currentBird
-      ? state.currentBird
-      : await attemptBirdSelection(filters);
-
-    if (!selectedBird) {
-      setStatus("Couldn't find a match — try again.", 'error');
-      return;
-    }
-
-    state.currentBird = selectedBird;
-    state.currentLifeStatus = selectedBird.lifeStatus;
-    state.currentRegion = selectedBird.region;
-
-    const actionChoice = state.locks.action && state.currentAction ? state.currentAction : pickRandom(actionsList, state.currentAction);
-    state.currentAction = actionChoice;
-
-    const styleChoice = state.locks.style && state.currentStyle ? state.currentStyle : pickRandom(stylesList, state.currentStyle);
-    state.currentStyle = styleChoice;
-
-    const viewChoice = state.locks.view && state.currentView ? state.currentView : pickRandom(viewsList, state.currentView);
-    state.currentView = viewChoice;
-
-    const prompt = formatPrompt(selectedBird, state.currentStyle, state.currentView, state.currentAction);
-    state.currentPromptText = prompt;
-
-    updatePromptDisplay();
-    cacheBird(selectedBird);
-
-    logHistory({
-      prompt,
-      bird: { ...selectedBird },
-      action: state.currentAction,
-      style: state.currentStyle,
-      view: state.currentView,
-      lifeStatus: selectedBird.lifeStatus,
-      region: selectedBird.region,
-      timestamp: Date.now()
-    });
-
-    setStatus('Prompt ready — let the wings inspire you.', 'success');
-  } catch (e) {
-    setStatus("Something went wrong fetching bird data — try again.", 'error');
-  } finally {
-    toggleGenerateState(false);
-    state.isGenerating = false;
-  }
-}
-      function saveFavorite() {
-        if (!state.currentPromptText || !state.currentBird) return;
-        const favorite = {
-          prompt: state.currentPromptText,
-          bird: { ...state.currentBird },
-          action: state.currentAction,
-          style: state.currentStyle,
-          view: state.currentView,
-          timestamp: Date.now()
-        };
-        state.favorites = state.favorites.filter((item) => item.prompt !== favorite.prompt);
-        state.favorites.unshift(favorite);
-        if (state.favorites.length > 20) {
-          state.favorites.pop();
-        }
-        persistFavorites();
-        renderFavorites();
-        setStatus('Saved to favorites. It stays on this device only.', 'success');
+      function blankImg() {
+        return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='500'%3E%3C/svg%3E";
       }
-      function removeFavorite(index) {
-        if (index < 0 || index >= state.favorites.length) return;
-        state.favorites.splice(index, 1);
-        persistFavorites();
-        renderFavorites();
-        setStatus('Favorite removed.', 'info');
-      }
-      function handleFavoriteClick(event) {
-        const button = event.target.closest('[data-remove-fav]');
-        if (!button) return;
-        const index = Number(button.dataset.removeFav);
-        removeFavorite(index);
-      }
-      function handleHistoryClick(event) {
-        const button = event.target.closest('[data-history-index]');
-        if (!button) return;
-        const index = Number(button.dataset.historyIndex);
-        const entry = state.history[index];
-        if (!entry) return;
-        applyHistoryEntry(entry);
-      }
-      function applyHistoryEntry(entry) {
-        state.currentBird = entry.bird;
-        state.currentAction = entry.action;
-        state.currentStyle = entry.style;
-        state.currentView = entry.view;
-        state.currentLifeStatus = entry.lifeStatus;
-        state.currentRegion = entry.region;
-        state.currentPromptText = entry.prompt;
-        updatePromptDisplay();
-        cacheBird(entry.bird);
-        logHistory({
-          prompt: entry.prompt,
-          bird: { ...entry.bird },
-          action: entry.action,
-          style: entry.style,
-          view: entry.view,
-          lifeStatus: entry.lifeStatus,
-          region: entry.region,
-          timestamp: Date.now()
-        });
-        setStatus('Reloaded from history — explore the pose or style again.', 'success');
-      }
-      function logHistory(entry) {
-        state.history = state.history.filter((item) => item.prompt !== entry.prompt);
-        state.history.unshift(entry);
-        if (state.history.length > 10) {
-          state.history.pop();
-        }
-        persistHistory();
-        renderHistory();
-      }
-      async function sparqlQuery(query) {
-  const url = 'https://query.wikidata.org/sparql?format=json&query=' + encodeURIComponent(query);
-  const res = await fetch(url, {
-    headers: {
-      'accept': 'application/sparql-results+json'
-    }
-  });
-  if (!res.ok) throw new Error('SPARQL request failed: ' + res.status);
-  return res.json();
-}
-      async function fetchWikiThumbnailFromTitle(title) {
-  try {
-    const apiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`;
-    const res = await fetch(apiUrl, { headers: { accept: 'application/json' } });
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data?.thumbnail?.source || data?.originalimage?.source || null;
-  } catch {
-    return null;
-  }
-}
+
       function bucketRegionFromText(text) {
-  const t = (text || '').toLowerCase();
-  if (!t) return null;
-  if (t.includes('north america')) return 'North America';
-  if (t.includes('south america')) return 'South America';
-  if (t.includes('europe')) return 'Europe';
-  if (t.includes('africa')) return 'Africa';
-  if (t.includes('asia')) return 'Asia';
-  if (t.includes('oceania') || t.includes('australia') || t.includes('new zealand')) return 'Oceania';
-  if (t.includes('island') || t.includes('archipelago')) return 'Island';
-  return null;
-}
-      function renderFavorites() {
-        if (!favoritesList) return;
-        favoritesList.innerHTML = '';
-        if (!state.favorites.length) {
-          favoritesList.innerHTML = '<p class="helper">No favorites yet.</p>';
-          return;
-        }
-        state.favorites.forEach((favorite, index) => {
-          const article = document.createElement('article');
-          article.className = 'favorite-card';
-          const date = formatTimestamp(favorite.timestamp);
-          article.innerHTML = `
-            <p class="prompt-snippet">${favorite.prompt}</p>
-            <div class="favorite-meta">
-              <span class="timestamp">${date}</span>
-              <button type="button" data-remove-fav="${index}" aria-label="Remove favorite">Remove</button>
-            </div>
-          `;
-          favoritesList.appendChild(article);
-        });
+        const t = (text || '').toLowerCase();
+        if (!t) return null;
+        if (t.includes('north america')) return 'North America';
+        if (t.includes('south america')) return 'South America';
+        if (t.includes('europe')) return 'Europe';
+        if (t.includes('africa')) return 'Africa';
+        if (t.includes('asia')) return 'Asia';
+        if (t.includes('oceania') || t.includes('australia') || t.includes('new zealand')) return 'Oceania';
+        if (t.includes('island') || t.includes('archipelago')) return 'Island';
+        return null;
       }
-      function renderHistory() {
-        if (!historyList) return;
-        historyList.innerHTML = '';
-        if (!state.history.length) {
-          historyList.innerHTML = '<p class="helper">History logs appear after you generate.</p>';
-          return;
-        }
-        state.history.forEach((entry, index) => {
-          const article = document.createElement('article');
-          article.className = 'history-card';
-          const date = formatTimestamp(entry.timestamp);
-          article.innerHTML = `
-            <p class="prompt-snippet">${entry.prompt}</p>
-            <div class="history-actions">
-              <button type="button" data-history-index="${index}">Reload</button>
-              <span class="timestamp">${date}</span>
-            </div>
-          `;
-          historyList.appendChild(article);
-        });
+
+      async function sparqlQuery(query) {
+        const url = 'https://query.wikidata.org/sparql?format=json&query=' + encodeURIComponent(query);
+        const res = await fetch(url, { headers: { 'accept': 'application/sparql-results+json' } });
+        if (!res.ok) throw new Error('SPARQL failed: ' + res.status);
+        return res.json();
       }
-      function loadFavorites() {
-        state.favorites = readStorage(favoritesKey);
-        renderFavorites();
+
+      async function fetchWikiSummary(title) {
+        const apiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`;
+        const res = await fetch(apiUrl, { headers: { accept: 'application/json' } });
+        if (!res.ok) return null;
+        return res.json();
       }
-      function loadHistory() {
-        state.history = readStorage(historyKey);
-        renderHistory();
+
+      function isExtinctIucn(qid) {
+        // extinct species / extinct in the wild
+        return qid === 'http://www.wikidata.org/entity/Q237350' || qid === 'http://www.wikidata.org/entity/Q239509';
       }
-      function persistFavorites() {
-        safeSet(favoritesKey, state.favorites);
-      }
-      function persistHistory() {
-        safeSet(historyKey, state.history);
-      }
-      function readStorage(key) {
-        if (typeof localStorage === 'undefined') return [];
-        try {
-          const stored = localStorage.getItem(key);
-          return stored ? JSON.parse(stored) : [];
-        } catch (error) {
-          return [];
-        }
-      }
-      function safeSet(key, value) {
-        if (typeof localStorage === 'undefined') return;
-        try {
-          localStorage.setItem(key, JSON.stringify(value));
-        } catch (error) {
-          // silent
-        }
-      }
+
       async function fetchRandomBirdFromWikidata(filters) {
-  // filters: { lifeStatus: 'Living'|'Extinct'|null, region: 'North America'|...|null }
+        // filters: { lifeStatus: 'Living'|'Extinct'|null, region: 'North America'|...|null }
 
-  // Extinction filter (P141 = IUCN conservation status)
-  // Q237350 = extinct species, Q239509 = extinct in the wild
-  const extinctClause = `
-    ?item wdt:P141 ?iucn .
-    FILTER(?iucn IN (wd:Q237350, wd:Q239509))
-  `;
-  const livingClause = `
-    FILTER NOT EXISTS {
-      ?item wdt:P141 ?iucn2 .
-      FILTER(?iucn2 IN (wd:Q237350, wd:Q239509))
-    }
-  `;
+        const extinctClause = `
+          ?item wdt:P141 ?iucn .
+          FILTER(?iucn IN (wd:Q237350, wd:Q239509))
+        `;
+        const livingClause = `
+          FILTER NOT EXISTS {
+            ?item wdt:P141 ?i2 .
+            FILTER(?i2 IN (wd:Q237350, wd:Q239509))
+          }
+        `;
 
-  // We will *try* to derive region from the Wikipedia summary later.
-  // For now, region filtering is best-effort: if a region is selected,
-  // we’ll retry until we get a summary that buckets into that region.
+        const lifeBlock =
+          filters.lifeStatus === 'Extinct' ? extinctClause :
+          filters.lifeStatus === 'Living' ? livingClause :
+          '';
 
-  const lifeBlock =
-    filters.lifeStatus === 'Extinct' ? extinctClause :
-    filters.lifeStatus === 'Living' ? livingClause :
-    '';
-
-  // Species selection: instance of taxon (Q16521) tends to work well for species pages.
-  // Get scientific name (P225) and English Wikipedia sitelink.
-  const query = `
-SELECT ?item ?itemLabel ?sci ?enwiki WHERE {
+        const query = `
+SELECT ?item ?itemLabel ?sci ?enwiki ?iucn WHERE {
   ?item wdt:P31 wd:Q16521 .
   ${lifeBlock}
   OPTIONAL { ?item wdt:P225 ?sci . }
+  OPTIONAL { ?item wdt:P141 ?iucn . }
   OPTIONAL {
     ?enwiki schema:about ?item ;
            schema:isPartOf <https://en.wikipedia.org/> .
@@ -1154,63 +787,301 @@ SELECT ?item ?itemLabel ?sci ?enwiki WHERE {
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
 }
 ORDER BY RAND()
-LIMIT 30
-  `.trim();
+LIMIT 25
+        `.trim();
 
-  const json = await sparqlQuery(query);
-  const rows = json?.results?.bindings || [];
-  if (!rows.length) return null;
+        const json = await sparqlQuery(query);
+        const rows = json?.results?.bindings || [];
+        if (!rows.length) return null;
 
-  // pick one with a scientific name if possible
-  const preferred = rows.find(r => r.sci?.value) || rows[0];
+        const preferred = rows.find(r => r.sci?.value) || rows[0];
+        const commonName = preferred.itemLabel?.value || 'Unknown bird';
+        const scientificName = preferred.sci?.value || '—';
+        const wikiUrl = preferred.enwiki?.value;
 
-  const commonName = preferred.itemLabel?.value || 'Unknown bird';
-  const scientificName = preferred.sci?.value || '—';
-  const wikiUrl = preferred.enwiki?.value;
+        const title = decodeURIComponent((wikiUrl.split('/wiki/')[1] || '').replace(/_/g, ' '));
+        const summary = await fetchWikiSummary(title);
 
-  // Convert enwiki URL to page title for thumbnail + summary
-  const title = decodeURIComponent(wikiUrl.split('/wiki/')[1] || '');
-  const thumb = await fetchWikiThumbnailFromTitle(title);
+        const thumb = summary?.thumbnail?.source || summary?.originalimage?.source || null;
+        const extract = summary?.extract || '';
+        const regionGuess = bucketRegionFromText(extract);
 
-  // Pull summary to bucket region if needed
-  let region = null;
-  let extract = null;
-  try {
-    const apiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`;
-    const res = await fetch(apiUrl, { headers: { accept: 'application/json' } });
-    if (res.ok) {
-      const data = await res.json();
-      extract = data?.extract || null;
-      region = bucketRegionFromText(extract);
-    }
-  } catch { /* ignore */ }
+        const iucnVal = preferred.iucn?.value || null;
+        const extinctByIucn = iucnVal ? isExtinctIucn(iucnVal) : false;
 
-  // Determine lifeStatus text
-  const lifeStatus = filters.lifeStatus ? filters.lifeStatus : (preferred.iucn ? 'Extinct' : 'Living');
-  // NOTE: If filters.lifeStatus is Any, the above guess isn’t perfect. We can improve later by querying P141 explicitly.
-  // For now it will mostly be Living unless extinct filter was selected.
+        const lifeStatus =
+          filters.lifeStatus ? filters.lifeStatus :
+          (extinctByIucn ? 'Extinct' : 'Living');
 
-  return {
-    commonName,
-    scientificName,
-    lifeStatus: filters.lifeStatus || 'Living',
-    region: region || 'Any',
-    image: thumb || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='500'%3E%3C/svg%3E",
-    wiki: wikiUrl
-  };
-}
+        return {
+          commonName,
+          scientificName,
+          lifeStatus,
+          region: regionGuess || 'Any',
+          image: thumb || blankImg(),
+          wiki: wikiUrl
+        };
+      }
+
+      async function attemptBirdSelection(filters) {
+        const maxTries = filters.region ? 10 : 4;
+
+        for (let i = 0; i < maxTries; i++) {
+          const bird = await fetchRandomBirdFromWikidata(filters);
+          if (!bird) continue;
+
+          if (filters.region && bird.region !== filters.region) continue;
+
+          return bird;
+        }
+        return null;
+      }
+
+      function cacheBird(bird) {
+        state.cache = state.cache.filter(e => e.wiki !== bird.wiki);
+        state.cache.unshift(bird);
+        if (state.cache.length > 20) state.cache.pop();
+      }
+
+      async function handleGenerate() {
+        if (state.isGenerating) return;
+
+        state.isGenerating = true;
+        setStatus('Finding a bird…');
+        toggleGenerateState(true);
+
+        try {
+          const lifeFilter =
+            state.locks.lifeStatus && state.currentLifeStatus
+              ? state.currentLifeStatus
+              : (lifeSelect.value !== 'Any' ? lifeSelect.value : null);
+
+          const regionFilter =
+            state.locks.region && state.currentRegion
+              ? state.currentRegion
+              : (regionSelect.value !== 'Any' ? regionSelect.value : null);
+
+          const filters = { lifeStatus: lifeFilter, region: regionFilter };
+
+          const selectedBird =
+            state.locks.bird && state.currentBird
+              ? state.currentBird
+              : await attemptBirdSelection(filters);
+
+          // If Wikidata fails, fallback to a small built-in list
+          const finalBird = selectedBird || fallbackBirds[Math.floor(Math.random() * fallbackBirds.length)];
+
+          // If fallback bird, fetch its wiki summary for image
+          if (!finalBird.image && finalBird.wiki) {
+            const title = decodeURIComponent((finalBird.wiki.split('/wiki/')[1] || '').replace(/_/g,' '));
+            const summary = await fetchWikiSummary(title);
+            finalBird.image = summary?.thumbnail?.source || summary?.originalimage?.source || blankImg();
+          }
+
+          state.currentBird = finalBird;
+          state.currentLifeStatus = finalBird.lifeStatus || (lifeFilter || 'Living');
+          state.currentRegion = finalBird.region || (regionFilter || 'Any');
+
+          const actionChoice = (state.locks.action && state.currentAction) ? state.currentAction : pickRandom(actionsList, state.currentAction);
+          const styleChoice  = (state.locks.style && state.currentStyle) ? state.currentStyle : pickRandom(stylesList, state.currentStyle);
+          const viewChoice   = (state.locks.view && state.currentView) ? state.currentView : pickRandom(viewsList, state.currentView);
+
+          state.currentAction = actionChoice;
+          state.currentStyle = styleChoice;
+          state.currentView = viewChoice;
+
+          const prompt = formatPrompt(finalBird, state.currentStyle, state.currentView, state.currentAction);
+          state.currentPromptText = prompt;
+
+          updatePromptDisplay();
+          cacheBird(finalBird);
+
+          logHistory({
+            prompt,
+            bird: { ...finalBird },
+            action: state.currentAction,
+            style: state.currentStyle,
+            view: state.currentView,
+            lifeStatus: finalBird.lifeStatus,
+            region: finalBird.region,
+            timestamp: Date.now()
+          });
+
+          setStatus('Prompt ready — let the wings inspire you.', 'success');
+        } catch (e) {
+          setStatus("Something went wrong fetching bird data — try again.", 'error');
+        } finally {
+          toggleGenerateState(false);
+          state.isGenerating = false;
+        }
+      }
+
+      function saveFavorite() {
+        if (!state.currentPromptText || !state.currentBird) return;
+
+        const favorite = {
+          prompt: state.currentPromptText,
+          bird: { ...state.currentBird },
+          action: state.currentAction,
+          style: state.currentStyle,
+          view: state.currentView,
+          timestamp: Date.now()
+        };
+
+        state.favorites = state.favorites.filter(i => i.prompt !== favorite.prompt);
+        state.favorites.unshift(favorite);
+        if (state.favorites.length > 20) state.favorites.pop();
+
+        persistFavorites();
+        renderFavorites();
+        setStatus('Saved to favorites. It stays on this device only.', 'success');
+      }
+
+      function removeFavorite(index) {
+        if (index < 0 || index >= state.favorites.length) return;
+        state.favorites.splice(index, 1);
+        persistFavorites();
+        renderFavorites();
+        setStatus('Favorite removed.', 'info');
+      }
+
+      function handleFavoriteClick(event) {
+        const button = event.target.closest('[data-remove-fav]');
+        if (!button) return;
+        removeFavorite(Number(button.dataset.removeFav));
+      }
+
+      function handleHistoryClick(event) {
+        const button = event.target.closest('[data-history-index]');
+        if (!button) return;
+        const index = Number(button.dataset.historyIndex);
+        const entry = state.history[index];
+        if (!entry) return;
+        applyHistoryEntry(entry);
+      }
+
+      function applyHistoryEntry(entry) {
+        state.currentBird = entry.bird;
+        state.currentAction = entry.action;
+        state.currentStyle = entry.style;
+        state.currentView = entry.view;
+        state.currentLifeStatus = entry.lifeStatus;
+        state.currentRegion = entry.region;
+        state.currentPromptText = entry.prompt;
+
+        updatePromptDisplay();
+        cacheBird(entry.bird);
+
+        logHistory({
+          ...entry,
+          timestamp: Date.now()
+        });
+
+        setStatus('Reloaded from history.', 'success');
+      }
+
+      function logHistory(entry) {
+        state.history = state.history.filter(i => i.prompt !== entry.prompt);
+        state.history.unshift(entry);
+        if (state.history.length > 10) state.history.pop();
+        persistHistory();
+        renderHistory();
+      }
+
+      function renderFavorites() {
+        favoritesList.innerHTML = '';
+        if (!state.favorites.length) {
+          favoritesList.innerHTML = '<p class="helper">No favorites yet.</p>';
+          return;
+        }
+
+        state.favorites.forEach((fav, index) => {
+          const article = document.createElement('article');
+          article.className = 'favorite-card';
+          article.innerHTML = `
+            <p class="prompt-snippet">${escapeHtml(fav.prompt)}</p>
+            <div class="favorite-meta">
+              <span class="timestamp">${formatTimestamp(fav.timestamp)}</span>
+              <button type="button" data-remove-fav="${index}" aria-label="Remove favorite">Remove</button>
+            </div>
+          `;
+          favoritesList.appendChild(article);
+        });
+      }
+
+      function renderHistory() {
+        historyList.innerHTML = '';
+        if (!state.history.length) {
+          historyList.innerHTML = '<p class="helper">History logs appear after you generate.</p>';
+          return;
+        }
+
+        state.history.forEach((entry, index) => {
+          const article = document.createElement('article');
+          article.className = 'history-card';
+          article.innerHTML = `
+            <p class="prompt-snippet">${escapeHtml(entry.prompt)}</p>
+            <div class="history-actions">
+              <button type="button" data-history-index="${index}">Reload</button>
+              <span class="timestamp">${formatTimestamp(entry.timestamp)}</span>
+            </div>
+          `;
+          historyList.appendChild(article);
+        });
+      }
+
+      function loadFavorites() {
+        state.favorites = readStorage(favoritesKey);
+        renderFavorites();
+      }
+
+      function loadHistory() {
+        state.history = readStorage(historyKey);
+        renderHistory();
+      }
+
+      function persistFavorites() { safeSet(favoritesKey, state.favorites); }
+      function persistHistory() { safeSet(historyKey, state.history); }
+
+      function readStorage(key) {
+        if (typeof localStorage === 'undefined') return [];
+        try {
+          const stored = localStorage.getItem(key);
+          return stored ? JSON.parse(stored) : [];
+        } catch {
+          return [];
+        }
+      }
+
+      function safeSet(key, value) {
+        if (typeof localStorage === 'undefined') return;
+        try {
+          localStorage.setItem(key, JSON.stringify(value));
+        } catch {
+          // ignore
+        }
+      }
+
       function formatTimestamp(timestamp) {
         if (!timestamp) return '';
         return new Date(timestamp).toLocaleString(undefined, {
-          month: 'short',
-          day: 'numeric',
-          hour: 'numeric',
-          minute: '2-digit'
+          month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'
         });
       }
+
+      function escapeHtml(str) {
+        return (str || '')
+          .replaceAll('&','&amp;')
+          .replaceAll('<','&lt;')
+          .replaceAll('>','&gt;')
+          .replaceAll('"','&quot;')
+          .replaceAll("'","&#039;");
+      }
+
       async function copyPrompt() {
         if (!state.currentPromptText) return;
         const defaultLabel = 'Copy Prompt';
+
         try {
           await navigator.clipboard.writeText(state.currentPromptText);
           copyBtn.textContent = 'Copied!';
@@ -1226,6 +1097,7 @@ LIMIT 30
           document.body.removeChild(textarea);
           copyBtn.textContent = 'Copied!';
         }
+
         setTimeout(() => {
           if (copyBtn) copyBtn.textContent = defaultLabel;
         }, 1200);
