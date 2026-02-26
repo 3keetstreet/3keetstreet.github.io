@@ -743,6 +743,9 @@
       let favoritesList;
       let historyList;
       let promptCard;
+      let lockBirdToggle;
+      let lockLifeToggle;
+      let lockRegionToggle;
       document.addEventListener('DOMContentLoaded', () => {
         generateBtn = document.getElementById('generateBtn');
         copyBtn = document.getElementById('copyPrompt');
@@ -760,6 +763,31 @@
         favoritesList = document.getElementById('favoritesList');
         historyList = document.getElementById('historyList');
         promptCard = document.querySelector('.prompt-card');
+        lockBirdToggle = document.getElementById('lockBird');
+lockLifeToggle = document.getElementById('lockLifeStatus');
+lockRegionToggle = document.getElementById('lockRegion');
+
+// initialize UI from state
+if (lockBirdToggle) lockBirdToggle.checked = state.locks.bird;
+if (lockLifeToggle) lockLifeToggle.checked = state.locks.lifeStatus;
+if (lockRegionToggle) lockRegionToggle.checked = state.locks.region;
+
+// sync state from UI
+if (lockBirdToggle) {
+  lockBirdToggle.addEventListener('change', () => {
+    state.locks.bird = lockBirdToggle.checked;
+  });
+}
+if (lockLifeToggle) {
+  lockLifeToggle.addEventListener('change', () => {
+    state.locks.lifeStatus = lockLifeToggle.checked;
+  });
+}
+if (lockRegionToggle) {
+  lockRegionToggle.addEventListener('change', () => {
+    state.locks.region = lockRegionToggle.checked;
+  });
+}
         const lockButtons = document.querySelectorAll('[data-lock]');
         lockButtons.forEach((button) => {
           button.addEventListener('click', () => {
