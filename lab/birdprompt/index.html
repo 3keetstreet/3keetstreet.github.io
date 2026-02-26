@@ -788,15 +788,6 @@ if (lockRegionToggle) {
     state.locks.region = lockRegionToggle.checked;
   });
 }
-        const lockButtons = document.querySelectorAll('[data-lock]');
-        lockButtons.forEach((button) => {
-          button.addEventListener('click', () => {
-            const lockKey = button.dataset.lock;
-            state.locks[lockKey] = !state.locks[lockKey];
-            button.classList.toggle('active', state.locks[lockKey]);
-            button.setAttribute('aria-pressed', String(state.locks[lockKey]));
-          });
-        });
         generateBtn.addEventListener('click', handleGenerate);
         copyBtn.addEventListener('click', copyPrompt);
         saveFavoriteBtn.addEventListener('click', saveFavorite);
