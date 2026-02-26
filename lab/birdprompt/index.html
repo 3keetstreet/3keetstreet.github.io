@@ -580,19 +580,15 @@
         'feeding chicks',
         'calling loudly',
         'wading in shallows',
-        'hovering above flowers',
-        'diving for fish',
         'dust bathing',
         'opening wings to sun',
         'gliding over cliffs',
         'nesting on a ledge',
-        'pecking at bark',
         'scratching the ground',
         'balancing on a reed',
         'resting on driftwood',
         'chasing insects',
         'carrying nesting material',
-        'sipping nectar',
         'strutting on display',
         'swimming calmly',
         'leaping from a perch',
@@ -601,12 +597,10 @@
       const stylesList = [
         'watercolor wash',
         'ink line art',
-        'vintage field-guide plate',
         'low-poly geometric',
         'charcoal sketch',
         'pastel painting',
         'cyberpunk neon',
-        'ukiyo-e inspired',
         'minimal flat',
         'photorealistic study',
         'abstract shapes',
@@ -628,7 +622,7 @@
         'full-body',
         'in-environment scene',
         'silhouette at sunset',
-        'macro detail of plumage'
+        'artist choice'
       ];
       const birds = [
         {
@@ -820,11 +814,22 @@ if (lockRegionToggle) {
         }
         return choice;
       }
-      function attemptBirdSelection(filters) {
-        const matches = birds.filter((bird) => {
-          const lifeMatch = filters.lifeStatus ? bird.lifeStatus === filters.lifeStatus : true;
-          const regionMatch = filters.region ? bird.region === filters.region : true;
-          return lifeMatch && regionMatch;
+      async function attemptBirdSelection(filters) {
+  // If region filter is set, retry a few times until the summary buckets correctly.
+  const maxTries = filters.region ? 8 : 3;
+
+  for (let i = 0; i < maxTries; i++) {
+    const bird = await fetchRandomBirdFromWikidata(filters);
+    if (!bird) continue;
+
+    // If user requested a specific region, enforce it
+    if (filters.region && bird.region !== filters.region) continue;
+
+    return bird;
+  }
+
+  return null;
+}
         });
         if (matches.length) {
           return matches[Math.floor(Math.random() * matches.length)];
@@ -868,53 +873,70 @@ if (lockRegionToggle) {
           setTimeout(() => promptCard.classList.remove('fresh'), 800);
         }
       }
-      function handleGenerate() {
-        if (state.isGenerating) return;
-        state.isGenerating = true;
-        setStatus('Finding a bird…');
-        toggleGenerateState(true);
-        setTimeout(() => {
-          const lifeFilter = state.locks.lifeStatus && state.currentLifeStatus ? state.currentLifeStatus : (lifeSelect.value !== 'Any' ? lifeSelect.value : null);
-          const regionFilter = state.locks.region && state.currentRegion ? state.currentRegion : (regionSelect.value !== 'Any' ? regionSelect.value : null);
-          const filters = {
-            lifeStatus: lifeFilter,
-            region: regionFilter
-          };
-          const selectedBird = state.locks.bird && state.currentBird ? state.currentBird : attemptBirdSelection(filters);
-          if (!selectedBird) {
-            setStatus("Couldn't find a match — try again.", 'error');
-            toggleGenerateState(false);
-            state.isGenerating = false;
-            return;
-          }
-          state.currentBird = selectedBird;
-          state.currentLifeStatus = selectedBird.lifeStatus;
-          state.currentRegion = selectedBird.region;
-          const actionChoice = state.locks.action && state.currentAction ? state.currentAction : pickRandom(actionsList, state.currentAction);
-          state.currentAction = actionChoice;
-          const styleChoice = state.locks.style && state.currentStyle ? state.currentStyle : pickRandom(stylesList, state.currentStyle);
-          state.currentStyle = styleChoice;
-          const viewChoice = state.locks.view && state.currentView ? state.currentView : pickRandom(viewsList, state.currentView);
-          state.currentView = viewChoice;
-          const prompt = formatPrompt(selectedBird, state.currentStyle, state.currentView, state.currentAction);
-          state.currentPromptText = prompt;
-          updatePromptDisplay();
-          cacheBird(selectedBird);
-          logHistory({
-            prompt,
-            bird: { ...selectedBird },
-            action: state.currentAction,
-            style: state.currentStyle,
-            view: state.currentView,
-            lifeStatus: selectedBird.lifeStatus,
-            region: selectedBird.region,
-            timestamp: Date.now()
-          });
-          setStatus('Prompt ready — let the wings inspire you.', 'success');
-          toggleGenerateState(false);
-          state.isGenerating = false;
-        }, 600);
-      }
+      async function handleGenerate() {
+  if (state.isGenerating) return;
+  state.isGenerating = true;
+  setStatus('Finding a bird…');
+  toggleGenerateState(true);
+
+  try {
+    const lifeFilter = state.locks.lifeStatus && state.currentLifeStatus
+      ? state.currentLifeStatus
+      : (lifeSelect.value !== 'Any' ? lifeSelect.value : null);
+
+    const regionFilter = state.locks.region && state.currentRegion
+      ? state.currentRegion
+      : (regionSelect.value !== 'Any' ? regionSelect.value : null);
+
+    const filters = { lifeStatus: lifeFilter, region: regionFilter };
+
+    const selectedBird = state.locks.bird && state.currentBird
+      ? state.currentBird
+      : await attemptBirdSelection(filters);
+
+    if (!selectedBird) {
+      setStatus("Couldn't find a match — try again.", 'error');
+      return;
+    }
+
+    state.currentBird = selectedBird;
+    state.currentLifeStatus = selectedBird.lifeStatus;
+    state.currentRegion = selectedBird.region;
+
+    const actionChoice = state.locks.action && state.currentAction ? state.currentAction : pickRandom(actionsList, state.currentAction);
+    state.currentAction = actionChoice;
+
+    const styleChoice = state.locks.style && state.currentStyle ? state.currentStyle : pickRandom(stylesList, state.currentStyle);
+    state.currentStyle = styleChoice;
+
+    const viewChoice = state.locks.view && state.currentView ? state.currentView : pickRandom(viewsList, state.currentView);
+    state.currentView = viewChoice;
+
+    const prompt = formatPrompt(selectedBird, state.currentStyle, state.currentView, state.currentAction);
+    state.currentPromptText = prompt;
+
+    updatePromptDisplay();
+    cacheBird(selectedBird);
+
+    logHistory({
+      prompt,
+      bird: { ...selectedBird },
+      action: state.currentAction,
+      style: state.currentStyle,
+      view: state.currentView,
+      lifeStatus: selectedBird.lifeStatus,
+      region: selectedBird.region,
+      timestamp: Date.now()
+    });
+
+    setStatus('Prompt ready — let the wings inspire you.', 'success');
+  } catch (e) {
+    setStatus("Something went wrong fetching bird data — try again.", 'error');
+  } finally {
+    toggleGenerateState(false);
+    state.isGenerating = false;
+  }
+}
       function saveFavorite() {
         if (!state.currentPromptText || !state.currentBird) return;
         const favorite = {
@@ -986,6 +1008,39 @@ if (lockRegionToggle) {
         persistHistory();
         renderHistory();
       }
+      async function sparqlQuery(query) {
+  const url = 'https://query.wikidata.org/sparql?format=json&query=' + encodeURIComponent(query);
+  const res = await fetch(url, {
+    headers: {
+      'accept': 'application/sparql-results+json'
+    }
+  });
+  if (!res.ok) throw new Error('SPARQL request failed: ' + res.status);
+  return res.json();
+}
+      async function fetchWikiThumbnailFromTitle(title) {
+  try {
+    const apiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`;
+    const res = await fetch(apiUrl, { headers: { accept: 'application/json' } });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data?.thumbnail?.source || data?.originalimage?.source || null;
+  } catch {
+    return null;
+  }
+}
+      function bucketRegionFromText(text) {
+  const t = (text || '').toLowerCase();
+  if (!t) return null;
+  if (t.includes('north america')) return 'North America';
+  if (t.includes('south america')) return 'South America';
+  if (t.includes('europe')) return 'Europe';
+  if (t.includes('africa')) return 'Africa';
+  if (t.includes('asia')) return 'Asia';
+  if (t.includes('oceania') || t.includes('australia') || t.includes('new zealand')) return 'Oceania';
+  if (t.includes('island') || t.includes('archipelago')) return 'Island';
+  return null;
+}
       function renderFavorites() {
         if (!favoritesList) return;
         favoritesList.innerHTML = '';
@@ -1059,6 +1114,91 @@ if (lockRegionToggle) {
           // silent
         }
       }
+      async function fetchRandomBirdFromWikidata(filters) {
+  // filters: { lifeStatus: 'Living'|'Extinct'|null, region: 'North America'|...|null }
+
+  // Extinction filter (P141 = IUCN conservation status)
+  // Q237350 = extinct species, Q239509 = extinct in the wild
+  const extinctClause = `
+    ?item wdt:P141 ?iucn .
+    FILTER(?iucn IN (wd:Q237350, wd:Q239509))
+  `;
+  const livingClause = `
+    FILTER NOT EXISTS {
+      ?item wdt:P141 ?iucn2 .
+      FILTER(?iucn2 IN (wd:Q237350, wd:Q239509))
+    }
+  `;
+
+  // We will *try* to derive region from the Wikipedia summary later.
+  // For now, region filtering is best-effort: if a region is selected,
+  // we’ll retry until we get a summary that buckets into that region.
+
+  const lifeBlock =
+    filters.lifeStatus === 'Extinct' ? extinctClause :
+    filters.lifeStatus === 'Living' ? livingClause :
+    '';
+
+  // Species selection: instance of taxon (Q16521) tends to work well for species pages.
+  // Get scientific name (P225) and English Wikipedia sitelink.
+  const query = `
+SELECT ?item ?itemLabel ?sci ?enwiki WHERE {
+  ?item wdt:P31 wd:Q16521 .
+  ${lifeBlock}
+  OPTIONAL { ?item wdt:P225 ?sci . }
+  OPTIONAL {
+    ?enwiki schema:about ?item ;
+           schema:isPartOf <https://en.wikipedia.org/> .
+  }
+  FILTER(BOUND(?enwiki))
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}
+ORDER BY RAND()
+LIMIT 30
+  `.trim();
+
+  const json = await sparqlQuery(query);
+  const rows = json?.results?.bindings || [];
+  if (!rows.length) return null;
+
+  // pick one with a scientific name if possible
+  const preferred = rows.find(r => r.sci?.value) || rows[0];
+
+  const commonName = preferred.itemLabel?.value || 'Unknown bird';
+  const scientificName = preferred.sci?.value || '—';
+  const wikiUrl = preferred.enwiki?.value;
+
+  // Convert enwiki URL to page title for thumbnail + summary
+  const title = decodeURIComponent(wikiUrl.split('/wiki/')[1] || '');
+  const thumb = await fetchWikiThumbnailFromTitle(title);
+
+  // Pull summary to bucket region if needed
+  let region = null;
+  let extract = null;
+  try {
+    const apiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`;
+    const res = await fetch(apiUrl, { headers: { accept: 'application/json' } });
+    if (res.ok) {
+      const data = await res.json();
+      extract = data?.extract || null;
+      region = bucketRegionFromText(extract);
+    }
+  } catch { /* ignore */ }
+
+  // Determine lifeStatus text
+  const lifeStatus = filters.lifeStatus ? filters.lifeStatus : (preferred.iucn ? 'Extinct' : 'Living');
+  // NOTE: If filters.lifeStatus is Any, the above guess isn’t perfect. We can improve later by querying P141 explicitly.
+  // For now it will mostly be Living unless extinct filter was selected.
+
+  return {
+    commonName,
+    scientificName,
+    lifeStatus: filters.lifeStatus || 'Living',
+    region: region || 'Any',
+    image: thumb || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='500'%3E%3C/svg%3E",
+    wiki: wikiUrl
+  };
+}
       function formatTimestamp(timestamp) {
         if (!timestamp) return '';
         return new Date(timestamp).toLocaleString(undefined, {
