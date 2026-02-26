@@ -233,17 +233,58 @@
     .ghost-btn:active {
       transform: translateY(1px);
     }
-    .bird-details {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 0.9rem;
-    }
-    .bird-details .label {
-      margin: 0;
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #4e6257;
+   <div class="bird-details">
+  <div class="detail-item">
+    <div class="text">
+      <p class="label">Common Name</p>
+      <p class="value" id="birdCommon">—</p>
+    </div>
+    <label class="lock-toggle" title="Lock bird">
+      <input type="checkbox" id="lockBird" />
+      <span class="lock-switch" aria-hidden="true"></span>
+      <span class="lock-icon" aria-hidden="true">
+        <span class="unlocked">🔓</span><span class="locked">🔒</span>
+      </span>
+    </label>
+  </div>
+
+  <div class="detail-item">
+    <div class="text">
+      <p class="label">Scientific Name</p>
+      <p class="value"><em id="scientificName">—</em></p>
+    </div>
+    <!-- tied to Lock Bird -->
+    <span></span>
+  </div>
+
+  <div class="detail-item">
+    <div class="text">
+      <p class="label">Life Status</p>
+      <p class="value" id="detailLifeStatus">—</p>
+    </div>
+    <label class="lock-toggle" title="Lock life status">
+      <input type="checkbox" id="lockLifeStatus" />
+      <span class="lock-switch" aria-hidden="true"></span>
+      <span class="lock-icon" aria-hidden="true">
+        <span class="unlocked">🔓</span><span class="locked">🔒</span>
+      </span>
+    </label>
+  </div>
+
+  <div class="detail-item">
+    <div class="text">
+      <p class="label">Region</p>
+      <p class="value" id="detailRegion">—</p>
+    </div>
+    <label class="lock-toggle" title="Lock region">
+      <input type="checkbox" id="lockRegion" />
+      <span class="lock-switch" aria-hidden="true"></span>
+      <span class="lock-icon" aria-hidden="true">
+        <span class="unlocked">🔓</span><span class="locked">🔒</span>
+      </span>
+    </label>
+  </div>
+</div>
     }
     .value {
       margin: 0;
@@ -471,14 +512,6 @@
           </select>
         </div>
       </section>
-
-
-
-
-
-
-
-      
       <section class="card prompt-card">
         <div class="prompt-output">
           <p class="label">Prompt</p>
