@@ -310,13 +310,13 @@ Pale Yellow: #fffcd4 */
 ========================= */
 
 .services-overview {
-  padding: 100px 0;
+  padding: 32px 0 100px;
 }
 
 .services-overview .section-intro {
   text-align: center;
   max-width: 700px;
-  margin: 0 auto 80px;
+  margin: 0 0 80px;
 }
 
 .services-overview .section-intro h2 {
