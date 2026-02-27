@@ -379,6 +379,11 @@ Pale Yellow: #fffcd4 */
   margin-right: -56px;
 }
 
+.services-overview .container {
+  margin-left: 0;     /* left-align this container */
+  margin-right: auto; /* keep it responsive */
+}
+
 /* --- TEXT COLORS IN CONTENT CARD --- */
 .services-overview .service-content h3 {
   color: #cbfcc5 !important;
