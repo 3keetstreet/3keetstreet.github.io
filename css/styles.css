@@ -328,6 +328,26 @@ Pale Yellow: #fffcd4 */
   opacity: 0.85;
 }
 
+/* Align service rows to the same 2-column layout as the subhero */
+.services-overview .service-row {
+  justify-content: center;   /* keep rows centered overall */
+  position: relative;
+}
+
+/* On desktop, offset rows so they "live" in the left or right hero column */
+@media (min-width: 1024px) {
+  .services-overview .service-row {
+    justify-content: flex-start; /* we’ll control the start line via padding */
+    padding-left: calc((1200px - 64px) / 2); /* hero left-column width */
+  }
+
+  .services-overview .service-row.reverse {
+    justify-content: flex-end;
+    padding-left: 0;
+    padding-right: calc((1200px - 64px) / 2); /* hero right-column width */
+  }
+}
+
 /* --- ROW LAYOUT (desktop) --- */
 .services-overview .service-row {
   display: flex;
