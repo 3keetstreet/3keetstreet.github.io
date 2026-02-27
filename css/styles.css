@@ -338,13 +338,13 @@ Pale Yellow: #fffcd4 */
 @media (min-width: 1024px) {
   .services-overview .service-row {
     justify-content: flex-start; /* we’ll control the start line via padding */
-    padding-left: calc((1200px - 64px) / 2); /* hero left-column width */
+    padding-left: calc((600px - 64px) / 2); /* hero left-column width */
   }
 
   .services-overview .service-row.reverse {
     justify-content: flex-end;
     padding-left: 0;
-    padding-right: calc((900px - 64px) / 2); /* hero right-column width */
+    padding-right: calc((600px - 64px) / 2); /* hero right-column width */
   }
 }
 
