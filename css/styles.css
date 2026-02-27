@@ -344,7 +344,7 @@ Pale Yellow: #fffcd4 */
   .services-overview .service-row.reverse {
     justify-content: flex-end;
     padding-left: 0;
-    padding-right: calc((1200px - 64px) / 2); /* hero right-column width */
+    padding-right: calc((900px - 64px) / 2); /* hero right-column width */
   }
 }
 
