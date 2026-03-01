@@ -328,6 +328,48 @@ Pale Yellow: #fffcd4 */
   opacity: 0.85;
 }
 
+/* --- ROW LAYOUT (desktop) --- */
+.services-overview .service-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin: 0 0 110px 0;
+  flex-wrap: nowrap;
+
+  justify-content: flex-start; /* default: left column */
+}
+
+/* Reverse rows: right column */
+.services-overview .service-row.reverse {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+/* Spread rows to match the subhero 2-col layout */
+@media (min-width: 1024px) {
+  .services-overview .service-row {
+    /* left column start line:
+       container padding (24) + half of remaining width after the 64px gap */
+    padding-left: calc((1200px - 64px) / 2);
+    padding-right: 0;
+  }
+
+  .services-overview .service-row.reverse {
+    padding-left: 0;
+    padding-right: calc((1200px - 64px) / 2);
+  }
+}
+
+/* On smaller screens, don't offset—keep centered stacking */
+@media (max-width: 1023px) {
+  .services-overview .service-row,
+  .services-overview .service-row.reverse {
+    padding-left: 0;
+    padding-right: 0;
+    justify-content: center;
+  }
+}
+
 /* Align service rows to the same 2-column layout as the subhero */
 .services-overview .service-row {
   justify-content: center;   /* keep rows centered overall */
@@ -401,11 +443,6 @@ Pale Yellow: #fffcd4 */
 .services-overview .service-row.reverse .service-content {
   margin-left: 0;
   margin-right: -56px;
-}
-
-.services-overview .container {
-  margin-left: 0;     /* left-align this container */
-  margin-right: auto; /* keep it responsive */
 }
 
 /* --- TEXT COLORS IN CONTENT CARD --- */
