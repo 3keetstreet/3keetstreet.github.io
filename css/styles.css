@@ -586,8 +586,9 @@ Pale Yellow: #fffcd4 */
     height: 60vh;          /* key: makes it feel like “fills screen” */
     min-height: 420px;     /* prevents it getting tiny */
     object-fit: cover;     /* key: fills the area */
-    border-radius: 0;
+    border-radius: 16;
     display: block;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25)
   }
 
   /* Text under the banner */
