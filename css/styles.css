@@ -350,7 +350,7 @@ Pale Yellow: #fffcd4 */
   .services-overview .service-row {
     /* left column start line:
        container padding (24) + half of remaining width after the 64px gap */
-    padding-left: calc((1200px - 64px) / 2);
+    padding-left: calc((1200px - 64px) / 2 - 40px);
     padding-right: 0;
   }
 
