@@ -621,3 +621,26 @@ Pale Yellow: #fffcd4 */
     padding: 0 24px;       /* gives breathing room since image is full-bleed */
   }
 }
+
+/* =========================
+   CONTACT PAGE
+========================= */
+
+.contact-info {
+  padding: 80px 0;
+  text-align: center;        /* center the block */
+}
+
+.contact-info p {
+  margin: 8px 0;
+}
+
+.contact-info a {
+  color: #3b646b;            /* lighter teal */
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.contact-info a:hover {
+  text-decoration: underline;
+}
