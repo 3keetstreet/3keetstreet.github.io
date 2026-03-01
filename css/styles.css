@@ -261,6 +261,7 @@ Pale Yellow: #fffcd4 */
 
 .subhero {
   padding: 80px 0 32px;
+  background: #3b646b; /* lighter teal */
 }
 
 .subhero-grid {
@@ -294,6 +295,37 @@ Pale Yellow: #fffcd4 */
 .subhero-content p {
   margin-bottom: 24px;
   line-height: 1.6;
+}
+
+.subhero .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid #cbfcc5;
+  color: #cbfcc5;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.subhero .btn:hover {
+  background: #cbfcc5;
+  color: #354545;
+}
+
+/* HERO TEXT COLORS */
+.subhero-content h1 {
+  color: #cbfcc5; /* mint (same as service titles) */
+}
+
+.subhero-content p {
+  color: #fffcd4; /* pale yellow */
+}
+
+.subhero-list li {
+  color: #fffcd4;
+}
+
+.subhero-list strong {
+  color: #cbfcc5; /* highlight service labels */
 }
 
 .subhero-list {
