@@ -653,6 +653,7 @@ Pale Yellow: #fffcd4 */
   background: #354545;        /* dark teal */
   padding: 40px 0;
   color: #fffcd4;             /* pale yellow text */
+  border-top: 1px solid rgba(255,255,255,0.1);
 }
 
 .site-footer .container {
