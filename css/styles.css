@@ -644,3 +644,35 @@ Pale Yellow: #fffcd4 */
 .contact-info a:hover {
   text-decoration: underline;
 }
+
+/* =========================
+   FOOTER
+========================= */
+
+.site-footer {
+  background: #354545;        /* dark teal */
+  padding: 40px 0;
+  color: #fffcd4;             /* pale yellow text */
+}
+
+.site-footer .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.site-footer p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.site-footer a {
+  color: #cbfcc5;             /* mint */
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
